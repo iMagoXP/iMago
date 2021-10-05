@@ -1,0 +1,7 @@
+vs/
+.vsconfig
+Library/Artifacts/*
+Library/ShaderCache/*
+Library/StateCache/*
+Logs/*
+*.meta
