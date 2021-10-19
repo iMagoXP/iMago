@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CylinderRotator : MonoBehaviour
+public class CarrouselRotator : MonoBehaviour
 {
     // Start is called before the first frame update
     public float DegreesPerSecond;
@@ -14,7 +14,7 @@ public class CylinderRotator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 rotation = new Vector3(0, DegreesPerSecond * Time.deltaTime, 0);
+        Vector3 rotation = new Vector3(0, 0, DegreesPerSecond * Time.deltaTime);
         transform.Rotate(rotation);
     }
 }
