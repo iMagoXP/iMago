@@ -9,6 +9,11 @@ public class ImageSpawner : MonoBehaviour
     public GameObject Image;
 
     [SerializeField]
+    private int rowCount;
+    [SerializeField]
+    private float rowHeightDropOffset;
+
+    [SerializeField]
     private float initalSpawnCooldown;
     [SerializeField]
     private float targetSpawnCooldown;
@@ -36,9 +41,10 @@ public class ImageSpawner : MonoBehaviour
                 new Vector3(0.0f, -1.0f, 0.0f)
             );
 
-            int row = Random.Range(-2, 3);
+            int row = Random.Range(-rowCount, rowCount + 1);
             Vector3 initialPosition = transform.position;
             initialPosition.z += row * 2;
+            initialPosition.y += Mathf.Abs(row) * row * row * rowHeightDropOffset;
 
             GameObject child = Instantiate(Image, initialPosition, initialRotation, Carrousel.transform);
             float scale = Random.Range(0.5f, 2.0f);

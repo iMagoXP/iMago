@@ -49,10 +49,11 @@
   <ItemGroup>
      <Compile Include="Assets\Samples\Google Cardboard XR Plugin for Unity\1.8.0\Hello Cardboard\Scripts\CardboardStartup.cs" />
      <Compile Include="Assets\Samples\Google Cardboard XR Plugin for Unity\1.8.0\Hello Cardboard\Scripts\ObjectController.cs" />
-     <Compile Include="Assets\Script\RotacaoCilindro.cs" />
-     <Compile Include="Assets\Script\GeraImagem.cs" />
+     <Compile Include="Assets\Script\CarrouselRotator.cs" />
+     <Compile Include="Assets\Script\ImageSpawner.cs" />
      <Compile Include="Assets\Samples\Google Cardboard XR Plugin for Unity\1.8.0\Hello Cardboard\Scripts\CameraPointer.cs" />
      <Compile Include="Assets\StaredPlayer.cs" />
+     <Compile Include="Assets\Script\ImageDestroyer.cs" />
      <Compile Include="Assets\Samples\Google Cardboard XR Plugin for Unity\1.8.0\Hello Cardboard\Scripts\VrModeController.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.18f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
