@@ -26,4 +26,8 @@ public class ImageDestroyer : MonoBehaviour
         if (falling && angle <= 45.0f)
             GameObject.Destroy(gameObject);
     }
+
+    void OnTriggerEnter(Collider other) {
+        GameObject.Destroy(gameObject);
+    }
 }

@@ -49,6 +49,7 @@
   <ItemGroup>
      <Compile Include="Assets\Samples\Google Cardboard XR Plugin for Unity\1.8.0\Hello Cardboard\Scripts\CardboardStartup.cs" />
      <Compile Include="Assets\Samples\Google Cardboard XR Plugin for Unity\1.8.0\Hello Cardboard\Scripts\ObjectController.cs" />
+     <Compile Include="Assets\Script\ImageRotator.cs" />
      <Compile Include="Assets\Script\CarrouselRotator.cs" />
      <Compile Include="Assets\Script\ImageSpawner.cs" />
      <Compile Include="Assets\Samples\Google Cardboard XR Plugin for Unity\1.8.0\Hello Cardboard\Scripts\CameraPointer.cs" />

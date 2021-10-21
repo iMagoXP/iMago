@@ -11,6 +11,8 @@ public class ImageSpawner : MonoBehaviour
     [SerializeField]
     private int rowCount;
     [SerializeField]
+    private int rotatedRows;
+    [SerializeField]
     private float rowHeightDropOffset;
 
     [SerializeField]
@@ -36,17 +38,28 @@ public class ImageSpawner : MonoBehaviour
         spawnTimer += Time.deltaTime;
         if (spawnTimer >= spawnCooldown)
         {
-            Quaternion initialRotation = Quaternion.LookRotation(
-                new Vector3(-1.0f, 0.0f, 0.0f),
-                new Vector3(0.0f, -1.0f, 0.0f)
-            );
-
             int row = Random.Range(-rowCount, rowCount + 1);
+
             Vector3 initialPosition = transform.position;
             initialPosition.z += row * 2;
             initialPosition.y += Mathf.Abs(row) * row * row * rowHeightDropOffset;
 
+            if (Mathf.Abs(row) >= rotatedRows) {
+                initialPosition.z += Random.Range(-1.0f, 1.0f);
+                initialPosition.y += Random.Range(-0.5f, 0.5f);
+            }
+
+            Vector3 lookDirection = (Mathf.Abs(row) < rotatedRows)
+                ? new Vector3(1.0f, 0.0f, 0.0f)
+                : new Vector3(0.0f, 0.0f, 1.0f);
+
+            Quaternion initialRotation = Quaternion.LookRotation(
+                lookDirection,
+                new Vector3(0.0f, -1.0f, 0.0f)
+            );
+
             GameObject child = Instantiate(Image, initialPosition, initialRotation, Carrousel.transform);
+
             float scale = Random.Range(0.5f, 2.0f);
             child.transform.localScale *= scale;
 
