@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class ImageSpawner : MonoBehaviour
 {
@@ -25,8 +26,13 @@ public class ImageSpawner : MonoBehaviour
     private float targetLifetime;
     private float curLifetime;
 
+    private FileInfo[] fileInfo;
+
     void Start()
     {
+        DirectoryInfo info = new DirectoryInfo("Assets/Imagens/.Imagens");
+        fileInfo = info.GetFiles();
+
         spawnCooldown = initalSpawnCooldown;
         spawnTimer = spawnCooldown;
         curLifetime = 0;
@@ -58,8 +64,9 @@ public class ImageSpawner : MonoBehaviour
                 new Vector3(0.0f, -1.0f, 0.0f)
             );
 
-            GameObject child = Instantiate(Image, initialPosition, initialRotation, Carrousel.transform);
 
+            GameObject child = Instantiate(Image, initialPosition, initialRotation, Carrousel.transform);
+            setTextureForChildren(child);
             float scale = Random.Range(0.5f, 2.0f);
             child.transform.localScale *= scale;
 
@@ -69,5 +76,24 @@ public class ImageSpawner : MonoBehaviour
         curLifetime += Time.deltaTime;
         float completeness = curLifetime / targetLifetime;
         spawnCooldown = Mathf.Lerp(initalSpawnCooldown, targetSpawnCooldown, completeness);
+    }
+
+    void setTextureForChildren(GameObject child)
+    {
+        Texture2D tex = null;
+        byte[] fileData;
+
+        string filePath = fileInfo[Random.Range(0, fileInfo.Length)].ToString();
+
+        fileData = File.ReadAllBytes(filePath);
+        tex = new Texture2D(2, 2);
+        tex.LoadImage(fileData); //..this will auto-resize the texture dimensions.
+
+        Material mats = child.GetComponent<Renderer>().material;
+        mats.SetTexture("_MainTex", tex);
+        mats = child.transform.GetChild(0).GetComponent<Renderer>().material;
+        mats.SetTexture("_MainTex", tex);
+        mats = child.transform.GetChild(1).GetComponent<Renderer>().material;
+        mats.SetTexture("_MainTex", tex);
     }
 }
