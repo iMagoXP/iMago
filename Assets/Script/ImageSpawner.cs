@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class ImageSpawner : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public GameObject Carrousel;
-    public GameObject Image;
+    public GameObject CarrouselObject;
+    public GameObject ImagePrefab;
 
     [SerializeField]
     private int rowCount;
@@ -27,7 +26,27 @@ public class ImageSpawner : MonoBehaviour
 
     private Object[] textures;
 
+    // Start is called before the first frame update
     void Start()
+    {
+        textures = LoadTextures();
+        SetTimers();
+    }
+
+    Object[] LoadTextures()
+    {
+        Object[] tex = Resources.LoadAll("Texture");
+
+        if (tex == null)
+        {
+            tex = new Object[1];
+            tex[0] = new Texture2D(64, 64);
+        }
+
+        return tex;
+    }
+
+    void SetTimers()
     {
         spawnCooldown = initalSpawnCooldown;
         spawnTimer = spawnCooldown;
@@ -38,45 +57,79 @@ public class ImageSpawner : MonoBehaviour
     void Update()
     {
         spawnTimer += Time.deltaTime;
+        curLifetime += Time.deltaTime;
+
         if (spawnTimer >= spawnCooldown)
         {
-            int row = Random.Range(-rowCount, rowCount + 1);
-
-            Vector3 initialPosition = transform.position;
-            initialPosition.z += row * 2;
-            initialPosition.y += Mathf.Abs(row) * row * row * rowHeightDropOffset;
-
-            if (Mathf.Abs(row) >= rotatedRows) {
-                initialPosition.z += Random.Range(-1.0f, 1.0f);
-                initialPosition.y += Random.Range(-0.5f, 0.5f);
-            }
-
-            Vector3 lookDirection = (Mathf.Abs(row) < rotatedRows)
-                ? new Vector3(1.0f, 0.0f, 0.0f)
-                : new Vector3(0.0f, 0.0f, 1.0f);
-
-            Quaternion initialRotation = Quaternion.LookRotation(
-                lookDirection,
-                new Vector3(0.0f, -1.0f, 0.0f)
-            );
-
-
-            GameObject child = Instantiate(Image, initialPosition, initialRotation, Carrousel.transform);
-            setTextureForChildren(child);
-            float scale = Random.Range(0.5f, 2.0f);
-            child.transform.localScale *= scale;
-
+            SpawnImage();
             spawnTimer -= spawnCooldown;
         }
 
-        curLifetime += Time.deltaTime;
         float completeness = curLifetime / targetLifetime;
-        spawnCooldown = Mathf.Lerp(initalSpawnCooldown, targetSpawnCooldown, completeness);
+        spawnCooldown = GetCurrentCooldown(completeness);
     }
 
-    void setTextureForChildren(GameObject child)
+    float GetCurrentCooldown(float completeness)
     {
-        textures = Resources.LoadAll("Texture");
+        return Mathf.Lerp(initalSpawnCooldown, targetSpawnCooldown, completeness);
+    }
+
+    void SpawnImage()
+    {
+        int row = GetSpawnRow();
+        Vector3 spawnPosition = GetSpawnPosition(row);
+        Quaternion spawnRotation = GetSpawnRotation(row);
+
+        GameObject image = Instantiate(
+            ImagePrefab,
+            spawnPosition,
+            spawnRotation,
+            CarrouselObject.transform
+        );
+        SetChildSize(image);
+        SetChildTexture(image);
+    }
+
+    int GetSpawnRow()
+    {
+        return Random.Range(-rowCount, rowCount + 1);
+    }
+
+    Vector3 GetSpawnPosition(int row)
+    {
+        Vector3 pos = transform.position;
+        pos.z += row * 2;
+        pos.y += Mathf.Abs(row) * row * row * rowHeightDropOffset;
+
+        if (Mathf.Abs(row) >= rotatedRows)
+        {
+            pos.z += Random.Range(-1.0f, 1.0f);
+            pos.y += Random.Range(-0.5f, 0.5f);
+        }
+
+        return pos;
+    }
+
+    Quaternion GetSpawnRotation(int row)
+    {
+        Vector3 lookDirection = (Mathf.Abs(row) < rotatedRows)
+            ? new Vector3(1.0f, 0.0f, 0.0f)
+            : new Vector3(0.0f, 0.0f, 1.0f);
+
+        return Quaternion.LookRotation(
+            lookDirection,
+            new Vector3(0.0f, -1.0f, 0.0f)
+        );
+    }
+
+    void SetChildSize(GameObject child)
+    {
+        float scale = Random.Range(0.5f, 2.0f);
+        child.transform.localScale *= scale;
+    }
+
+    void SetChildTexture(GameObject child)
+    {
         Texture2D tex = (Texture2D)textures[Random.Range(0, textures.Length)];
 
         Material mats = child.GetComponent<Renderer>().material;

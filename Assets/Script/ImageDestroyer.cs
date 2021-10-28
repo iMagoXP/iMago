@@ -11,23 +11,29 @@ public class ImageDestroyer : MonoBehaviour
     void Start()
     {
         falling = false;
-        initialRotation = transform.parent.gameObject.transform.rotation;
+        initialRotation = GetCurrentParentRotation();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Quaternion curRotation = transform.parent.gameObject.transform.rotation;
+        Quaternion curRotation = GetCurrentParentRotation();
         float angle = Quaternion.Angle(initialRotation, curRotation);
 
-        if (angle >= 175.0f)
-            falling = true;
-
-        if (falling && angle <= 45.0f)
+        if (ShouldDestroy(angle))
             GameObject.Destroy(gameObject);
     }
 
-    void OnTriggerEnter(Collider other) {
-        GameObject.Destroy(gameObject);
+    Quaternion GetCurrentParentRotation()
+    {
+        return transform.parent.rotation;
+    }
+
+    bool ShouldDestroy(float angle)
+    {
+        if (angle >= 175.0f)
+            falling = true;
+
+        return falling && angle <= 45.0f;
     }
 }

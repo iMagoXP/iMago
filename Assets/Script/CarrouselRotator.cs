@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CarrouselRotator : MonoBehaviour
 {
-    // Start is called before the first frame update
     public float DegreesPerSecond;
 
+    // Start is called before the first frame update
     void Start()
     {
     }
