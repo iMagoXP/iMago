@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
 
 public class ImageSpawner : MonoBehaviour
 {
@@ -26,13 +25,10 @@ public class ImageSpawner : MonoBehaviour
     private float targetLifetime;
     private float curLifetime;
 
-    private FileInfo[] fileInfo;
+    private Object[] textures;
 
     void Start()
     {
-        DirectoryInfo info = new DirectoryInfo("Assets/Imagens/.Imagens");
-        fileInfo = info.GetFiles();
-
         spawnCooldown = initalSpawnCooldown;
         spawnTimer = spawnCooldown;
         curLifetime = 0;
@@ -80,14 +76,8 @@ public class ImageSpawner : MonoBehaviour
 
     void setTextureForChildren(GameObject child)
     {
-        Texture2D tex = null;
-        byte[] fileData;
-
-        string filePath = fileInfo[Random.Range(0, fileInfo.Length)].ToString();
-
-        fileData = File.ReadAllBytes(filePath);
-        tex = new Texture2D(2, 2);
-        tex.LoadImage(fileData); //..this will auto-resize the texture dimensions.
+        textures = Resources.LoadAll("Texture");
+        Texture2D tex = (Texture2D)textures[Random.Range(0, textures.Length)];
 
         Material mats = child.GetComponent<Renderer>().material;
         mats.SetTexture("_MainTex", tex);
