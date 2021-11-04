@@ -8,11 +8,11 @@ public class ImageSpawner : MonoBehaviour
     public GameObject ImagePrefab;
 
     [SerializeField]
-    private int rowCount;
+    private int rowCount = 7;
     [SerializeField]
-    private int rotatedRows;
+    private int rotatedRows = 3;
     [SerializeField]
-    private float rowHeightDropOffset;
+    private float rowHeightDropOffset = 0.016f;
 
     [SerializeField]
     private float initalSpawnCooldown;
@@ -46,7 +46,7 @@ public class ImageSpawner : MonoBehaviour
         return tex;
     }
 
-    void SetTimers()
+    public void SetTimers()
     {
         spawnCooldown = initalSpawnCooldown;
         spawnTimer = spawnCooldown;
@@ -69,12 +69,12 @@ public class ImageSpawner : MonoBehaviour
         spawnCooldown = GetCurrentCooldown(completeness);
     }
 
-    float GetCurrentCooldown(float completeness)
+    public float GetCurrentCooldown(float completeness)
     {
         return Mathf.Lerp(initalSpawnCooldown, targetSpawnCooldown, completeness);
     }
 
-    void SpawnImage()
+    public void SpawnImage()
     {
         int row = GetSpawnRow();
         Vector3 spawnPosition = GetSpawnPosition(row);
@@ -90,12 +90,12 @@ public class ImageSpawner : MonoBehaviour
         SetChildTexture(image);
     }
 
-    int GetSpawnRow()
+    public int GetSpawnRow()
     {
         return Random.Range(-rowCount, rowCount + 1);
     }
 
-    Vector3 GetSpawnPosition(int row)
+    public Vector3 GetSpawnPosition(int row)
     {
         Vector3 pos = transform.position;
         pos.z += row * 2;
@@ -110,7 +110,7 @@ public class ImageSpawner : MonoBehaviour
         return pos;
     }
 
-    Quaternion GetSpawnRotation(int row)
+    public Quaternion GetSpawnRotation(int row)
     {
         Vector3 lookDirection = (Mathf.Abs(row) < rotatedRows)
             ? new Vector3(1.0f, 0.0f, 0.0f)
@@ -122,13 +122,13 @@ public class ImageSpawner : MonoBehaviour
         );
     }
 
-    void SetChildSize(GameObject child)
+    public void SetChildSize(GameObject child)
     {
         float scale = Random.Range(0.5f, 2.0f);
         child.transform.localScale *= scale;
     }
 
-    void SetChildTexture(GameObject child)
+    public void SetChildTexture(GameObject child)
     {
         Texture2D tex = (Texture2D)textures[Random.Range(0, textures.Length)];
 

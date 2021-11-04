@@ -24,16 +24,21 @@ public class ImageDestroyer : MonoBehaviour
             GameObject.Destroy(gameObject);
     }
 
-    Quaternion GetCurrentParentRotation()
+    public Quaternion GetCurrentParentRotation()
     {
         return transform.parent.rotation;
     }
 
-    bool ShouldDestroy(float angle)
+    public bool ShouldDestroy(float angle)
     {
         if (angle >= 175.0f)
             falling = true;
 
         return falling && angle <= 45.0f;
+    }
+
+    public bool TestingGetterFalling()
+    {
+        return falling;
     }
 }
