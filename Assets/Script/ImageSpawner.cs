@@ -24,6 +24,7 @@ public class ImageSpawner : MonoBehaviour
     private float targetLifetime;
     private float curLifetime;
 
+    private TextureLoaderInterface textureLoader = new TextureLoader(); 
     private Object[] textures;
 
     // Start is called before the first frame update
@@ -33,9 +34,9 @@ public class ImageSpawner : MonoBehaviour
         SetTimers();
     }
 
-    Object[] LoadTextures()
+    public Object[] LoadTextures()
     {
-        Object[] tex = Resources.LoadAll("Texture");
+        Object[] tex = textureLoader.LoadTextures();
 
         if (tex == null)
         {
@@ -138,5 +139,10 @@ public class ImageSpawner : MonoBehaviour
         mats.SetTexture("_MainTex", tex);
         mats = child.transform.GetChild(1).GetComponent<Renderer>().material;
         mats.SetTexture("_MainTex", tex);
+    }
+
+    public void TestingSetterTextureLoaderInterface(TextureLoaderInterface inter)
+    {
+        textureLoader = inter;
     }
 }
