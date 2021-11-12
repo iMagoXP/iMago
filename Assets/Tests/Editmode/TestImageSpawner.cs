@@ -5,13 +5,115 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using NSubstitute;
 
+public class TestingImageSpawner : ImageSpawner
+{
+    // Testing getters
+
+    public float GetInitialSpawnCooldown()
+    {
+        return initalSpawnCooldown;
+    }
+
+    public float GetSpawnCooldown()
+    {
+        return spawnCooldown;
+    }
+
+    public float GetSpawnTimer()
+    {
+        return spawnTimer;
+    }
+
+    public float GetCurLifetime()
+    {
+        return curLifetime;
+    }
+    
+    public int GetRowCount()
+    {
+        return rowCount;
+    }
+    
+    // Testing setters
+
+    public void SetTextureLoaderInterface(TextureLoaderInterface inter)
+    {
+        textureLoader = inter;
+    }
+}
+
+// NOTE: solu√ß√£o realmente n√£o convencional, bem hacky
+// seria legal conversar com os professores pra ter opini√£o deles
+public class ImageSpawnerUpdateMock : TestingImageSpawner
+{
+    public bool didSpawnImage = false;
+    public float dt;
+
+    public ImageSpawnerUpdateMock()
+    {
+        spawnCooldown = 10.0f;
+    }
+
+    public override void SpawnImage()
+    {
+        didSpawnImage = true;
+    }
+
+    public override float GetCurrentCooldown(float comp)
+    {
+        return 42.0f;
+    }
+
+    public override float getDeltaTime()
+    {
+        return dt;
+    }
+}
+
 public class TestImageSpawner
 {
     [UnityTest]
-    public IEnumerator SetTimers() //Realizar apenas quando tivermos definido os atributos serialized
+    public IEnumerator Update()
     {
-        ImageSpawner imageSpawner = CreateImageSpawner();
+        {
+            GameObject gameObject = new GameObject();
+            ImageSpawnerUpdateMock imageSpawner = gameObject.AddComponent<ImageSpawnerUpdateMock>();
 
+            imageSpawner.dt = 0.0f;
+
+            imageSpawner.Update();
+            Assert.AreEqual(false, imageSpawner.didSpawnImage);
+            Assert.AreEqual(0.0f, imageSpawner.GetSpawnTimer());
+            Assert.AreEqual(0.0f, imageSpawner.GetCurLifetime());
+            Assert.AreEqual(42.0f, imageSpawner.GetSpawnCooldown());
+        }
+
+        {
+            GameObject gameObject = new GameObject();
+            ImageSpawnerUpdateMock imageSpawner = gameObject.AddComponent<ImageSpawnerUpdateMock>();
+
+            imageSpawner.dt = 10.0f;
+
+            imageSpawner.Update();
+            Assert.AreEqual(true, imageSpawner.didSpawnImage);
+            Assert.AreEqual(0.0f, imageSpawner.GetSpawnTimer());
+            Assert.AreEqual(10.0f, imageSpawner.GetCurLifetime());
+            Assert.AreEqual(42.0f, imageSpawner.GetSpawnCooldown());
+        }
+
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator SetTimers()
+    {
+        var imageSpawner = CreateImageSpawner();
+
+        imageSpawner.SetTimers();
+        float initialSpawnCooldown = imageSpawner.GetInitialSpawnCooldown();
+        Assert.AreEqual(initialSpawnCooldown, imageSpawner.GetSpawnCooldown());
+        Assert.AreEqual(initialSpawnCooldown, imageSpawner.GetSpawnCooldown());
+        Assert.AreEqual(0.0f, imageSpawner.GetCurLifetime());
 
         yield return null;
     }
@@ -19,13 +121,13 @@ public class TestImageSpawner
     [UnityTest]
     public IEnumerator LoadTextures()
     {
-        ImageSpawner imageSpawner = CreateImageSpawner();
+        var imageSpawner = CreateImageSpawner();
         
         {
             var stub = Substitute.For<TextureLoaderInterface>();
             stub.LoadTextures().Returns(x => null);
 
-            imageSpawner.TestingSetterTextureLoaderInterface(stub);
+            imageSpawner.SetTextureLoaderInterface(stub);
             Object[] textures = imageSpawner.LoadTextures();
 
             Assert.AreEqual(1, textures.Length);
@@ -36,7 +138,7 @@ public class TestImageSpawner
             var stub = Substitute.For<TextureLoaderInterface>();
             stub.LoadTextures().Returns(x => expectedTextures);
 
-            imageSpawner.TestingSetterTextureLoaderInterface(stub);
+            imageSpawner.SetTextureLoaderInterface(stub);
             Object[] textures = imageSpawner.LoadTextures();
 
             Assert.AreEqual(expectedTextures, textures);
@@ -48,26 +150,26 @@ public class TestImageSpawner
     [UnityTest]
     public IEnumerator GetCurrentCooldown() //Realizar depois
     {
-        ImageSpawner imageSpawner = CreateImageSpawner();
+        var imageSpawner = CreateImageSpawner();
 
 
         yield return null;
     }
 
     [UnityTest]
-    public IEnumerator SpawnImage() //Realizar depois
+    public IEnumerator GetSpawnRow()
     {
-        ImageSpawner imageSpawner = CreateImageSpawner();
+        var imageSpawner = CreateImageSpawner();
 
-        yield return null;
-    }
+        int maxRow = imageSpawner.GetRowCount();
+        int minRow = -maxRow;
 
-    [UnityTest]
-    public IEnumerator GetSpawnRow() //Realizar depois
-    {
-        ImageSpawner imageSpawner = CreateImageSpawner();
-
-
+        for (int i = 0; i < 5; i++)
+        {
+            var lane = imageSpawner.GetSpawnRow();
+            Assert.LessOrEqual(minRow, lane);
+            Assert.GreaterOrEqual(maxRow, lane);
+        }
 
         yield return null;
     }
@@ -75,8 +177,8 @@ public class TestImageSpawner
     [UnityTest]
     public IEnumerator GetSpawnPosition()
     {
-        // TODO: usar atributos ao invÈs de n˙meros m·gicos
-        ImageSpawner imageSpawner = CreateImageSpawner();
+        // TODO: usar atributos ao invÔøΩs de nÔøΩmeros mÔøΩgicos
+        var imageSpawner = CreateImageSpawner();
 
         Vector3 position = imageSpawner.GetSpawnPosition(0);
         Assert.AreEqual(imageSpawner.transform.position, position);
@@ -102,7 +204,7 @@ public class TestImageSpawner
     [UnityTest]
     public IEnumerator GetSpawnRotation() 
     {
-        ImageSpawner imageSpawner = CreateImageSpawner();
+        var imageSpawner = CreateImageSpawner();
 
         Quaternion rot = imageSpawner.GetSpawnRotation(0);
         Assert.AreEqual(
@@ -128,7 +230,7 @@ public class TestImageSpawner
     [UnityTest]
     public IEnumerator SetChildSize() 
     {
-        ImageSpawner imageSpawner = CreateImageSpawner();
+        var imageSpawner = CreateImageSpawner();
 
         for (int i = 0; i < 5; i++)
         {
@@ -146,17 +248,17 @@ public class TestImageSpawner
     }
 
     [UnityTest]
-    public IEnumerator SetChildTexture() //Realizar depois
+    public IEnumerator SetChildTexture() // TODO: Perguntar para os professores
     {
-        ImageSpawner imageSpawner = CreateImageSpawner();
+        var imageSpawner = CreateImageSpawner();
 
 
         yield return null;
     }
 
-    private ImageSpawner CreateImageSpawner()
+    private TestingImageSpawner CreateImageSpawner()
     {
         GameObject gameObject = new GameObject();
-        return gameObject.AddComponent<ImageSpawner>();
+        return gameObject.AddComponent<TestingImageSpawner>();
     }
 }

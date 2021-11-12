@@ -8,26 +8,25 @@ public class ImageSpawner : MonoBehaviour
     public GameObject ImagePrefab;
 
     [SerializeField]
-    private int rowCount = 7;
+    protected int rowCount = 7;
     [SerializeField]
-    private int rotatedRows = 3;
+    protected int rotatedRows = 3;
     [SerializeField]
-    private float rowHeightDropOffset = 0.016f;
+    protected float rowHeightDropOffset = 0.016f;
 
     [SerializeField]
-    private float initalSpawnCooldown;
+    protected float initalSpawnCooldown;
     [SerializeField]
-    private float targetSpawnCooldown;
-    private float spawnCooldown;
-    private float spawnTimer;
+    protected float targetSpawnCooldown;
+    protected float spawnCooldown;
+    protected float spawnTimer;
     [SerializeField]
-    private float targetLifetime;
-    private float curLifetime;
+    protected float targetLifetime;
+    protected float curLifetime;
 
-    private TextureLoaderInterface textureLoader = new TextureLoader(); 
-    private Object[] textures;
+    protected TextureLoaderInterface textureLoader = new TextureLoader(); 
+    protected Object[] textures;
 
-    // Start is called before the first frame update
     void Start()
     {
         textures = LoadTextures();
@@ -54,11 +53,11 @@ public class ImageSpawner : MonoBehaviour
         curLifetime = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        spawnTimer += Time.deltaTime;
-        curLifetime += Time.deltaTime;
+        float dt = getDeltaTime();
+        spawnTimer += dt;
+        curLifetime += dt;
 
         if (spawnTimer >= spawnCooldown)
         {
@@ -70,12 +69,17 @@ public class ImageSpawner : MonoBehaviour
         spawnCooldown = GetCurrentCooldown(completeness);
     }
 
-    public float GetCurrentCooldown(float completeness)
+    public virtual float getDeltaTime() 
+    {
+        return Time.deltaTime;
+    }
+
+    public virtual float GetCurrentCooldown(float completeness)
     {
         return Mathf.Lerp(initalSpawnCooldown, targetSpawnCooldown, completeness);
     }
 
-    public void SpawnImage()
+    public virtual void SpawnImage()
     {
         int row = GetSpawnRow();
         Vector3 spawnPosition = GetSpawnPosition(row);
@@ -139,10 +143,5 @@ public class ImageSpawner : MonoBehaviour
         mats.SetTexture("_MainTex", tex);
         mats = child.transform.GetChild(1).GetComponent<Renderer>().material;
         mats.SetTexture("_MainTex", tex);
-    }
-
-    public void TestingSetterTextureLoaderInterface(TextureLoaderInterface inter)
-    {
-        textureLoader = inter;
     }
 }
