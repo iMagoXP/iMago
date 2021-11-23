@@ -622,9 +622,9 @@ MonoBehaviour:
   rowCount: 7
   rotatedRows: 3
   rowHeightDropOffset: 0.016
-  initalSpawnCooldown: 5
-  targetSpawnCooldown: 0.01
-  targetLifetime: 1
+  baseImagesPerSecond: 1
+  imagesPerSecondIncrement: 5
+  imageLevelCooldown: 10
 --- !u!1 &1854999977
 GameObject:
   m_ObjectHideFlags: 0

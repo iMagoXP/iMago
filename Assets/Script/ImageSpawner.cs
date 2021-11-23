@@ -14,23 +14,33 @@ public class ImageSpawner : MonoBehaviour
     [SerializeField]
     protected float rowHeightDropOffset = 0.016f;
 
-    [SerializeField]
-    protected float initalSpawnCooldown;
-    [SerializeField]
-    protected float targetSpawnCooldown;
-    protected float spawnCooldown;
     protected float spawnTimer;
-    [SerializeField]
-    protected float targetLifetime;
-    protected float curLifetime;
 
-    protected TextureLoaderInterface textureLoader = new TextureLoader(); 
+    [SerializeField]
+    protected float baseImagesPerSecond;
+    protected float imagesPerSecond;
+    [SerializeField]
+    protected float imagesPerSecondIncrement;
+
+    [SerializeField]
+    protected float imageLevelCooldown;
+    protected float imageLevelTimer;
+
+    protected float[] images_scales;
+
+    protected TextureLoaderInterface textureLoader = new TextureLoader();
     protected Object[] textures;
 
     void Start()
     {
         textures = LoadTextures();
         SetTimers();
+        images_scales = new float[4];
+        images_scales[0] = 0.5f;
+        images_scales[1] = 1.0f;
+        images_scales[2] = 1.5f;
+        images_scales[3] = 2.0f;
+
     }
 
     public Object[] LoadTextures()
@@ -48,36 +58,44 @@ public class ImageSpawner : MonoBehaviour
 
     public void SetTimers()
     {
-        spawnCooldown = initalSpawnCooldown;
-        spawnTimer = spawnCooldown;
-        curLifetime = 0;
+        imagesPerSecond = baseImagesPerSecond;
+        spawnTimer = GetSpawnCooldown();
     }
 
     public void Update()
     {
-        float dt = getDeltaTime();
+        float dt = GetDeltaTime();
         spawnTimer += dt;
-        curLifetime += dt;
+        imageLevelTimer += dt;
 
-        if (spawnTimer >= spawnCooldown)
+        UpdateImageLevel();
+
+        if (spawnTimer >= GetSpawnCooldown())
         {
             SpawnImage();
-            spawnTimer -= spawnCooldown;
+            spawnTimer -= GetSpawnCooldown();
         }
-
-        float completeness = curLifetime / targetLifetime;
-        spawnCooldown = GetCurrentCooldown(completeness);
     }
 
-    public virtual float getDeltaTime() 
+    public virtual float GetDeltaTime()
     {
         return Time.deltaTime;
     }
 
-    public virtual float GetCurrentCooldown(float completeness)
+    public virtual float GetSpawnCooldown()
     {
-        return Mathf.Lerp(initalSpawnCooldown, targetSpawnCooldown, completeness);
+        return 1 / imagesPerSecond;
     }
+
+    public void UpdateImageLevel()
+    {
+        if (imageLevelTimer >= imageLevelCooldown)
+        {
+            imageLevelTimer = 0;
+            imagesPerSecond += imagesPerSecondIncrement;
+        }
+    }
+
 
     public virtual void SpawnImage()
     {
@@ -127,10 +145,10 @@ public class ImageSpawner : MonoBehaviour
         );
     }
 
-    public void SetChildSize(GameObject child)
+    public virtual void SetChildSize(GameObject child)
     {
-        float scale = Random.Range(0.5f, 2.0f);
-        child.transform.localScale *= scale;
+        int index = Random.Range(0, images_scales.Length);
+        child.transform.localScale *= index;
     }
 
     public void SetChildTexture(GameObject child)
