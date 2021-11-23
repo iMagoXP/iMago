@@ -9,14 +9,14 @@ public class TestingImageSpawner : ImageSpawner
 {
     // Testing getters
 
-    public float GetInitialSpawnCooldown()
+    public float GetBaseImagesPerSecond()
     {
-        return initalSpawnCooldown;
+        return baseImagesPerSecond;
     }
 
-    public float GetSpawnCooldown()
+    public float GetImagesPerSecond()
     {
-        return spawnCooldown;
+        return imagesPerSecond;
     }
 
     public float GetSpawnTimer()
@@ -24,9 +24,9 @@ public class TestingImageSpawner : ImageSpawner
         return spawnTimer;
     }
 
-    public float GetCurLifetime()
+    public float GetImageLevelTimer() 
     {
-        return curLifetime;
+        return imageLevelTimer;
     }
     
     public int GetRowCount()
@@ -42,8 +42,6 @@ public class TestingImageSpawner : ImageSpawner
     }
 }
 
-// NOTE: solução realmente não convencional, bem hacky
-// seria legal conversar com os professores pra ter opinião deles
 public class ImageSpawnerUpdateMock : TestingImageSpawner
 {
     public bool didSpawnImage = false;
@@ -51,7 +49,9 @@ public class ImageSpawnerUpdateMock : TestingImageSpawner
 
     public ImageSpawnerUpdateMock()
     {
-        spawnCooldown = 10.0f;
+        imagesPerSecond = 10.0f;
+        imageLevelCooldown = 5.0f;
+        imagesPerSecondIncrement = 3.0f;
     }
 
     public override void SpawnImage()
@@ -59,12 +59,12 @@ public class ImageSpawnerUpdateMock : TestingImageSpawner
         didSpawnImage = true;
     }
 
-    public override float GetCurrentCooldown(float comp)
+    public override void SetChildSize(GameObject child)
     {
-        return 42.0f;
+        child.transform.localScale *= 1;
     }
 
-    public override float getDeltaTime()
+    public override float GetDeltaTime()
     {
         return dt;
     }
@@ -82,38 +82,36 @@ public class TestImageSpawner
             imageSpawner.dt = 0.0f;
 
             imageSpawner.Update();
+            Assert.AreEqual(0.0f, imageSpawner.GetImageLevelTimer());
             Assert.AreEqual(false, imageSpawner.didSpawnImage);
             Assert.AreEqual(0.0f, imageSpawner.GetSpawnTimer());
-            Assert.AreEqual(0.0f, imageSpawner.GetCurLifetime());
-            Assert.AreEqual(42.0f, imageSpawner.GetSpawnCooldown());
+            Assert.AreEqual(1.0f/10.0f, imageSpawner.GetSpawnCooldown());
         }
 
         {
-            GameObject gameObject = new GameObject();
-            ImageSpawnerUpdateMock imageSpawner = gameObject.AddComponent<ImageSpawnerUpdateMock>();
+            ImageSpawnerUpdateMock imageSpawner = CreateImageSpawnerMock();
 
             imageSpawner.dt = 10.0f;
 
             imageSpawner.Update();
+            Assert.AreEqual(0.0f, imageSpawner.GetImageLevelTimer());
+            Assert.AreEqual(13.0f, imageSpawner.GetImagesPerSecond());
             Assert.AreEqual(true, imageSpawner.didSpawnImage);
-            Assert.AreEqual(0.0f, imageSpawner.GetSpawnTimer());
-            Assert.AreEqual(10.0f, imageSpawner.GetCurLifetime());
-            Assert.AreEqual(42.0f, imageSpawner.GetSpawnCooldown());
+            Assert.AreEqual(10.0f-(1.0f / 13.0f), imageSpawner.GetSpawnTimer());
+            Assert.AreEqual(1.0f/13.0f, imageSpawner.GetSpawnCooldown());
         }
 
         yield return null;
     }
 
-    [UnityTest]
+   [UnityTest]
     public IEnumerator SetTimers()
     {
         var imageSpawner = CreateImageSpawner();
-
+        float imagesPerSecond = imageSpawner.GetBaseImagesPerSecond();
         imageSpawner.SetTimers();
-        float initialSpawnCooldown = imageSpawner.GetInitialSpawnCooldown();
-        Assert.AreEqual(initialSpawnCooldown, imageSpawner.GetSpawnCooldown());
-        Assert.AreEqual(initialSpawnCooldown, imageSpawner.GetSpawnCooldown());
-        Assert.AreEqual(0.0f, imageSpawner.GetCurLifetime());
+        Assert.AreEqual(imagesPerSecond, imageSpawner.GetImagesPerSecond());
+        Assert.AreEqual(imageSpawner.GetSpawnCooldown(), imageSpawner.GetSpawnTimer());
 
         yield return null;
     }
@@ -143,15 +141,6 @@ public class TestImageSpawner
 
             Assert.AreEqual(expectedTextures, textures);
         }
-
-        yield return null;
-    }
-
-    [UnityTest]
-    public IEnumerator GetCurrentCooldown() //Realizar depois
-    {
-        var imageSpawner = CreateImageSpawner();
-
 
         yield return null;
     }
@@ -230,18 +219,18 @@ public class TestImageSpawner
     [UnityTest]
     public IEnumerator SetChildSize() 
     {
-        var imageSpawner = CreateImageSpawner();
+        var imageSpawner = CreateImageSpawnerMock();
 
         for (int i = 0; i < 5; i++)
         {
             GameObject child = new GameObject();
             imageSpawner.SetChildSize(child);
-            Assert.GreaterOrEqual(child.transform.localScale.x, child.transform.localScale.x * 0.5f);
-            Assert.GreaterOrEqual(child.transform.localScale.y, child.transform.localScale.y * 0.5f);
-            Assert.GreaterOrEqual(child.transform.localScale.z, child.transform.localScale.z * 0.5f);
-            Assert.LessOrEqual(child.transform.localScale.x, child.transform.localScale.x * 2.0f);
-            Assert.LessOrEqual(child.transform.localScale.y, child.transform.localScale.y * 2.0f);
-            Assert.LessOrEqual(child.transform.localScale.z, child.transform.localScale.z * 2.0f);
+            Assert.GreaterOrEqual(child.transform.localScale.x, child.transform.localScale.x * 1);
+            Assert.GreaterOrEqual(child.transform.localScale.y, child.transform.localScale.y * 1);
+            Assert.GreaterOrEqual(child.transform.localScale.z, child.transform.localScale.z * 1);
+            Assert.LessOrEqual(child.transform.localScale.x, child.transform.localScale.x * 1);
+            Assert.LessOrEqual(child.transform.localScale.y, child.transform.localScale.y * 1);
+            Assert.LessOrEqual(child.transform.localScale.z, child.transform.localScale.z * 1);
         }
 
         yield return null;
@@ -260,5 +249,11 @@ public class TestImageSpawner
     {
         GameObject gameObject = new GameObject();
         return gameObject.AddComponent<TestingImageSpawner>();
+    }
+
+    private ImageSpawnerUpdateMock CreateImageSpawnerMock()
+    {
+        GameObject gameObject = new GameObject();
+        return gameObject.AddComponent<ImageSpawnerUpdateMock>();
     }
 }
