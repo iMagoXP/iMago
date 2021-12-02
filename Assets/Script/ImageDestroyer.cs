@@ -4,41 +4,26 @@ using UnityEngine;
 
 public class ImageDestroyer : MonoBehaviour
 {
-    private Quaternion initialRotation;
-    private bool falling;
+    private float startY;
 
-    // Start is called before the first frame update
     void Start()
     {
-        falling = false;
-        initialRotation = GetCurrentParentRotation();
+        startY = transform.position.y;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        Quaternion curRotation = GetCurrentParentRotation();
-        float angle = Quaternion.Angle(initialRotation, curRotation);
-
-        if (ShouldDestroy(angle))
-            GameObject.Destroy(gameObject);
+        if (startY > GetPositionY())
+            DestroySelf();
     }
 
-    public Quaternion GetCurrentParentRotation()
+    public virtual float GetPositionY()
     {
-        return transform.parent.rotation;
+        return transform.position.y;
     }
 
-    public bool ShouldDestroy(float angle)
+    public virtual void DestroySelf()
     {
-        if (angle >= 175.0f)
-            falling = true;
-
-        return falling && angle <= 45.0f;
-    }
-
-    public bool TestingGetterFalling()
-    {
-        return falling;
+        GameObject.Destroy(gameObject);
     }
 }

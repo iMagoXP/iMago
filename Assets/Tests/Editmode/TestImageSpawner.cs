@@ -174,15 +174,15 @@ public class TestImageSpawner
 
         position = imageSpawner.GetSpawnPosition(1);
         Vector3 pos = imageSpawner.transform.position;   
-        Assert.AreEqual(new Vector3(pos.x, pos.y + 0.016f, pos.z + 2), position);
+        Assert.AreEqual(new Vector3(pos.x, pos.y + 0.0f, pos.z + 2), position);
         
         for(int i = 0; i < 5; i++)
         {
             position = imageSpawner.GetSpawnPosition(5);
             pos = imageSpawner.transform.position;
             Assert.AreEqual(pos.x, position.x);
-            Assert.GreaterOrEqual(pos.y + 2.5f, position.y);
-            Assert.LessOrEqual(pos.y + 1.5f, position.y);
+            Assert.GreaterOrEqual(pos.y + 0.5f, position.y);
+            Assert.LessOrEqual(pos.y - 0.5f, position.y);
             Assert.GreaterOrEqual(pos.z + 11.0f, position.z);
             Assert.LessOrEqual(pos.z + 9.0f, position.z);
         }
@@ -198,8 +198,12 @@ public class TestImageSpawner
         Quaternion rot = imageSpawner.GetSpawnRotation(0);
         Assert.AreEqual(
             Quaternion.LookRotation(
-               new Vector3(1.0f, 0.0f, 0.0f),
-               new Vector3(0.0f, -1.0f, 0.0f)
+                new Vector3(
+                    -imageSpawner.transform.position.y,
+                    imageSpawner.transform.position.x,
+                    -imageSpawner.transform.position.z
+                ),
+                new Vector3(0.0f, -1.0f, 0.0f)
             ),
             rot
         );
@@ -207,7 +211,11 @@ public class TestImageSpawner
         rot = imageSpawner.GetSpawnRotation(5);
         Assert.AreEqual(
             Quaternion.LookRotation(
-                new Vector3(0.0f, 0.0f, 1.0f),
+                new Vector3(
+                    -imageSpawner.transform.position.y,
+                    imageSpawner.transform.position.x,
+                    -imageSpawner.transform.position.z
+                ),
                 new Vector3(0.0f, -1.0f, 0.0f)
             ),
             rot

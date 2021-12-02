@@ -35,12 +35,12 @@ public class ImageSpawner : MonoBehaviour
     {
         textures = LoadTextures();
         SetTimers();
-        images_scales = new float[4];
-        images_scales[0] = 0.5f;
-        images_scales[1] = 1.0f;
-        images_scales[2] = 1.5f;
-        images_scales[3] = 2.0f;
-
+        images_scales = new float[5];
+        images_scales[0] = 2.5f;
+        images_scales[1] = 5.0f;
+        images_scales[2] = 10.0f;
+        images_scales[3] = 25.0f;
+        images_scales[4] = 50.0f;
     }
 
     public Object[] LoadTextures()
@@ -122,7 +122,7 @@ public class ImageSpawner : MonoBehaviour
     {
         Vector3 pos = transform.position;
         pos.z += row * 2;
-        pos.y += Mathf.Abs(row) * row * row * rowHeightDropOffset;
+        // pos.y -= Mathf.Abs(row) * row * row * rowHeightDropOffset;
 
         if (Mathf.Abs(row) >= rotatedRows)
         {
@@ -135,13 +135,15 @@ public class ImageSpawner : MonoBehaviour
 
     public Quaternion GetSpawnRotation(int row)
     {
-        Vector3 lookDirection = (Mathf.Abs(row) < rotatedRows)
-            ? new Vector3(1.0f, 0.0f, 0.0f)
-            : new Vector3(0.0f, 0.0f, 1.0f);
+        Vector3 lookDirection = new Vector3(
+            -transform.position.y,
+            transform.position.x,
+            -transform.position.z
+        );
 
         return Quaternion.LookRotation(
             lookDirection,
-            new Vector3(0.0f, -1.0f, 0.0f)
+            new Vector3(0.0f, 1.0f, 0.0f)
         );
     }
 

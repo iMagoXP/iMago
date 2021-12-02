@@ -4,53 +4,48 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
+public class TestingImageDestroyer : ImageDestroyer
+{
+    public bool destroyed = false;
+    public float yPos = 10.0f;
+
+    override public void DestroySelf()
+    {
+        destroyed = true;
+    }
+
+    override public float GetPositionY()
+    {
+        return yPos;
+    }
+
+    public void SetPositionY(float val)
+    {
+        yPos = val;
+    }
+}
+
 public class ImageDestroyerTest
 {
     [UnityTest]
-    public IEnumerator ShouldDestroy()
+    public IEnumerator Update()
     { 
-        ImageDestroyer imageDestroyer = CreateImageDestroyer();
+        TestingImageDestroyer imageDestroyer = CreateImageDestroyerMock();
 
-        bool shouldDestroy = imageDestroyer.ShouldDestroy(0.0f);
-        bool falling = imageDestroyer.TestingGetterFalling();
+        imageDestroyer.SetPositionY(10.0f);
+        imageDestroyer.Update();
+        Assert.AreEqual(false, imageDestroyer.destroyed);
 
-        Assert.AreEqual(false, falling);
-        Assert.AreEqual(false, shouldDestroy);
-
-        shouldDestroy = imageDestroyer.ShouldDestroy(180.0f);
-        falling = imageDestroyer.TestingGetterFalling();
-
-        Assert.AreEqual(true, falling);
-        Assert.AreEqual(false, shouldDestroy);
-
-        shouldDestroy = imageDestroyer.ShouldDestroy(0.0f);
-        falling = imageDestroyer.TestingGetterFalling();
-
-        Assert.AreEqual(true, falling);
-        Assert.AreEqual(true, shouldDestroy);
+        imageDestroyer.SetPositionY(-10.0f);
+        imageDestroyer.Update();
+        Assert.AreEqual(true, imageDestroyer.destroyed);
 
         yield return null;
     }
 
-    [UnityTest]
-    public IEnumerator GetCurrentParentRotation()
-    {
-        GameObject parent = new GameObject();
-        parent.transform.rotation = Quaternion.identity;
-
-        ImageDestroyer imageDestroyer = CreateImageDestroyer();
-        imageDestroyer.transform.SetParent(parent.transform);
-        Quaternion parentRotation = imageDestroyer.GetCurrentParentRotation();
-
-        Assert.AreEqual(parent.transform.rotation, parentRotation);
-
-        yield return null;
-    }
-
-    private ImageDestroyer CreateImageDestroyer()
+    private TestingImageDestroyer CreateImageDestroyerMock()
     {
         GameObject gameObject = new GameObject();
-        return gameObject.AddComponent<ImageDestroyer>();
+        return gameObject.AddComponent<TestingImageDestroyer>();
     }
-
 }
