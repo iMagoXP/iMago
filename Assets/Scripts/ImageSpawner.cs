@@ -36,11 +36,12 @@ public class ImageSpawner : MonoBehaviour
         textures = LoadTextures();
         SetTimers();
         images_scales = new float[5];
-        images_scales[0] = 2.5f;
-        images_scales[1] = 5.0f;
-        images_scales[2] = 10.0f;
-        images_scales[3] = 25.0f;
-        images_scales[4] = 50.0f;
+        images_scales[0] = 2.0f;
+        images_scales[1] = 4.0f;
+        images_scales[2] = 6.0f;
+        images_scales[3] = 8.0f;
+        images_scales[4] = 1.0f;
+
     }
 
     public Object[] LoadTextures()
@@ -103,6 +104,8 @@ public class ImageSpawner : MonoBehaviour
         Vector3 spawnPosition = GetSpawnPosition(row);
         Quaternion spawnRotation = GetSpawnRotation(row);
 
+        
+
         GameObject image = Instantiate(
             ImagePrefab,
             spawnPosition,
@@ -122,7 +125,13 @@ public class ImageSpawner : MonoBehaviour
     {
         Vector3 pos = transform.position;
         pos.z += row * 2;
-        // pos.y -= Mathf.Abs(row) * row * row * rowHeightDropOffset;
+
+        Vector2 dir = new Vector2(transform.position.x, transform.position.y);
+        dir.Normalize();
+        float rowDrop = row * row * rowHeightDropOffset;
+        pos.x -= rowDrop * dir.x;
+        pos.y -= rowDrop * dir.y;
+
 
         if (Mathf.Abs(row) >= rotatedRows)
         {
@@ -135,11 +144,9 @@ public class ImageSpawner : MonoBehaviour
 
     public Quaternion GetSpawnRotation(int row)
     {
-        Vector3 lookDirection = new Vector3(
-            -transform.position.y,
-            transform.position.x,
-            -transform.position.z
-        );
+        Vector3 lookDirection = (Random.Range(0.0f, 1.0f) <= 0.5f) ?
+            new Vector3(1.0f, 0.0f, 0.0f) :
+            new Vector3(0.0f, 0.0f, 1.0f);
 
         return Quaternion.LookRotation(
             lookDirection,
@@ -150,16 +157,14 @@ public class ImageSpawner : MonoBehaviour
     public virtual void SetChildSize(GameObject child)
     {
         int index = Random.Range(0, images_scales.Length);
-        child.transform.localScale *= index;
+        child.transform.localScale *= images_scales[index];
     }
 
     public void SetChildTexture(GameObject child)
     {
         Texture2D tex = (Texture2D)textures[Random.Range(0, textures.Length)];
 
-        Material mats = child.GetComponent<Renderer>().material;
-        mats.SetTexture("_MainTex", tex);
-        mats = child.transform.GetChild(0).GetComponent<Renderer>().material;
+        Material mats = child.transform.GetChild(0).GetComponent<Renderer>().material;
         mats.SetTexture("_MainTex", tex);
         mats = child.transform.GetChild(1).GetComponent<Renderer>().material;
         mats.SetTexture("_MainTex", tex);
