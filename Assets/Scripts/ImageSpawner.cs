@@ -144,14 +144,28 @@ public class ImageSpawner : MonoBehaviour
 
     public Quaternion GetSpawnRotation(int row)
     {
-        Vector3 lookDirection = (Random.Range(0.0f, 1.0f) <= 0.5f) ?
-            new Vector3(1.0f, 0.0f, 0.0f) :
-            new Vector3(0.0f, 0.0f, 1.0f);
+        if (row < 0)
+        {
+            Vector3 lookDirection = (Random.Range(0.0f, 1.0f) <= 0.5f) ?
+                new Vector3(1.0f, 0.0f, 0.0f) :
+                new Vector3(0.0f, 0.0f, -1.0f);
 
-        return Quaternion.LookRotation(
-            lookDirection,
-            new Vector3(0.0f, 1.0f, 0.0f)
-        );
+            return Quaternion.LookRotation(
+                lookDirection,
+                new Vector3(0.0f, 1.0f, 0.0f)
+            );
+        }
+        else
+        {
+            Vector3 lookDirection = (Random.Range(0.0f, 1.0f) <= 0.5f) ?
+             new Vector3(1.0f, 0.0f, 0.0f) :
+             new Vector3(0.0f, 0.0f, 1.0f);
+
+            return Quaternion.LookRotation(
+                lookDirection,
+                new Vector3(0.0f, 1.0f, 0.0f)
+            );
+        }
     }
 
     public virtual void SetChildSize(GameObject child)

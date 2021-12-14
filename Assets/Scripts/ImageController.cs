@@ -8,6 +8,7 @@ public class ImageController : MonoBehaviour
     float timer = 0.0f;
     [SerializeField]
     float actionTime;
+    private Animator animator;
 
     void Start()
     {
@@ -15,10 +16,17 @@ public class ImageController : MonoBehaviour
 
     void Update()
     {
-        if (gazedAt) timer += Time.deltaTime;
-        if (timer > actionTime)
+        if (gazedAt == true)
         {
-            Debug.Log("Olhou por tanto tempo");
+            timer += Time.deltaTime;
+            if (timer > actionTime)
+            {
+                Material mats = gameObject.GetComponent<Renderer>().material;
+                mats.SetColor("_Color", new Color(1.0f, 0.0f, 0.0f, 1.0f));
+                gameObject.transform.parent.gameObject.transform.GetChild(2).gameObject.SetActive(true);
+                animator = gameObject.transform.parent.gameObject.GetComponent<Animator>();
+                animator.Play("PrefabFade");
+            }
         }
     }
 
@@ -26,9 +34,6 @@ public class ImageController : MonoBehaviour
     {
         gazedAt = true;
         timer = 0.0f;
-        Material mats = gameObject.GetComponent<Renderer>().material;
-        mats.SetColor("_Color", new Color(1.0f, 0.0f, 0.0f, 1.0f));
-        Debug.Log("Olhou pra mim");
     }
 
     public void OnPointerExit()
