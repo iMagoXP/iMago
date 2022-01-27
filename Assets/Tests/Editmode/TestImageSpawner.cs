@@ -166,7 +166,6 @@ public class TestImageSpawner
     [UnityTest]
     public IEnumerator GetSpawnPosition()
     {
-        // TODO: usar atributos ao inv�s de n�meros m�gicos
         var imageSpawner = CreateImageSpawner();
 
         Vector3 position = imageSpawner.GetSpawnPosition(0);
@@ -195,31 +194,53 @@ public class TestImageSpawner
     {
         var imageSpawner = CreateImageSpawner();
 
-        Quaternion rot = imageSpawner.GetSpawnRotation(0);
-        Assert.AreEqual(
-            Quaternion.LookRotation(
-                new Vector3(
-                    -imageSpawner.transform.position.y,
-                    imageSpawner.transform.position.x,
-                    -imageSpawner.transform.position.z
-                ),
-                new Vector3(0.0f, -1.0f, 0.0f)
-            ),
-            rot
+        Quaternion front = Quaternion.LookRotation(
+            new Vector3(1.0f, 0.0f, 0.0f), 
+            new Vector3(0.0f, 1.0f, 0.0f)
         );
-        
-        rot = imageSpawner.GetSpawnRotation(5);
-        Assert.AreEqual(
-            Quaternion.LookRotation(
-                new Vector3(
-                    -imageSpawner.transform.position.y,
-                    imageSpawner.transform.position.x,
-                    -imageSpawner.transform.position.z
-                ),
-                new Vector3(0.0f, -1.0f, 0.0f)
-            ),
-            rot
+
+        Quaternion right = Quaternion.LookRotation(
+            new Vector3(0.0f, 0.0f, 1.0f),
+            new Vector3(0.0f, 1.0f, 0.0f)
         );
+
+        Quaternion left = Quaternion.LookRotation(
+            new Vector3(0.0f, 0.0f, -1.0f),
+            new Vector3(0.0f, 1.0f, 0.0f)
+        );
+
+        for (int i = 0; i < 5; i++)
+        {
+            Quaternion rot = imageSpawner.GetSpawnRotation(0);
+            if (rot == front)
+            {
+                Assert.AreEqual(front, rot);
+            }
+            else
+            {
+                Assert.AreEqual(right, rot);
+            }
+
+            rot = imageSpawner.GetSpawnRotation(5);
+            if (rot == front)
+            {
+                Assert.AreEqual(front, rot);
+            }
+            else
+            {
+                Assert.AreEqual(right, rot);
+            }
+
+            rot = imageSpawner.GetSpawnRotation(-5);
+            if (rot == front)
+            {
+                Assert.AreEqual(front, rot);
+            }
+            else
+            {
+                Assert.AreEqual(left, rot);
+            }
+        }
 
         yield return null;
     }
@@ -245,7 +266,7 @@ public class TestImageSpawner
     }
 
     [UnityTest]
-    public IEnumerator SetChildTexture() // TODO: Perguntar para os professores
+    public IEnumerator SetChildTexture() 
     {
         var imageSpawner = CreateImageSpawner();
 
