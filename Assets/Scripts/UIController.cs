@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
-    private Image imagem;
+    private Image[] image;
     private float dt;
     private Text[] texto = new Text[2];
     public float screenTime;
@@ -16,7 +16,7 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        imagem = gameObject.GetComponentInChildren < Image > ();
+        image = gameObject.GetComponentsInChildren < Image > (true);
         texto = gameObject.GetComponentsInChildren < Text > (true);
         buttons = gameObject.GetComponentsInChildren < Button >(true);
     }
@@ -39,13 +39,11 @@ public class UIController : MonoBehaviour
         switch (state)
         {
             case 1:
-                texto[0].CrossFadeAlpha(0, 1.5f, false);
-                texto[1].CrossFadeAlpha(0, 1.5f, false);
+                image[1].CrossFadeAlpha(0, 1.5f, false);
                 break;
             case 2:
                 texto[0].text = " Orgulhosamente ";
                 texto[1].text = " Apresenta... ";
-                texto[1].color = new Color(1, 1, 1, 1);
                 texto[0].CrossFadeAlpha(1, 1.5f, false);
                 texto[1].CrossFadeAlpha(1, 1.5f, false);
                 break;
@@ -54,13 +52,11 @@ public class UIController : MonoBehaviour
                 texto[1].CrossFadeAlpha(0, 1.5f, false);
                 break;
             case 4:
-                texto[0].text = " A Cidade ";
-                texto[0].color = new Color(0, 0, 0, 1);
-                texto[1].text = " Instagram ";
-                texto[0].CrossFadeAlpha(1, 1.5f, false);
-                texto[1].CrossFadeAlpha(1, 1.5f, false);
+                image[1].sprite = Resources.Load<Sprite>("UI/220202 Cidade Instagram - Artboards__Logo Cidade Instagram");
+                image[1].CrossFadeAlpha(1, 1.5f, false);
                 break;
             case 5:
+                image[4].gameObject.SetActive(true);
                 buttons[0].gameObject.SetActive(true);
                 buttons[1].gameObject.SetActive(true);
                 break;
