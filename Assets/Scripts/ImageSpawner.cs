@@ -104,8 +104,6 @@ public class ImageSpawner : MonoBehaviour
         Vector3 spawnPosition = GetSpawnPosition(row);
         Quaternion spawnRotation = GetSpawnRotation(row);
 
-        
-
         GameObject image = Instantiate(
             ImagePrefab,
             spawnPosition,
