@@ -28,13 +28,17 @@ public class VROn : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Awake()
+    public void StartVR()
     {
-        Screen.orientation = ScreenOrientation.LandscapeRight;
         StartCoroutine(EnterVr());
         if (Api.HasNewDeviceParams())
         {
             Api.ReloadDeviceParams();
         }
+    }
+
+    private void Start()
+    {
+        StartVR();
     }
 }

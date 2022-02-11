@@ -4,17 +4,30 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class UIDragger : MonoBehaviour
+public class UISobre : MonoBehaviour
 {
     private Vector3 touchposition;
     private Vector2 startPos;
     private Vector2 direction;
     public float magnitude;
     private bool limit;
+    private GameObject[] panel;
+    private Image[] childrenImage;
+    private Text[] childrenText;
+    private Text[] sobreText;
+
+    void Start()
+    {
+        panel = GameObject.FindGameObjectsWithTag("Panel");
+        childrenImage = panel[0].gameObject.GetComponentsInChildren<Image>(true);
+        childrenText = panel[0].gameObject.GetComponentsInChildren<Text>(true);
+        sobreText = panel[1].gameObject.GetComponentsInChildren<Text>(true);
+    }
 
     // Start is called before the first frame update
     void Update()
     {
+        Debug.Log(transform.position.y);
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -23,10 +36,8 @@ public class UIDragger : MonoBehaviour
             //touchposition = new Vector3(touch.position.x, 0.0f, 0.0f);
             //transform.position -= touchposition.normalized;
             // Debug.Log(touch.position);
-            Debug.Log(transform.position.x);
-            if (transform.position.x < 18.1f && transform.position.x > -242.0f)
+            if (transform.position.y >= -347.0f && transform.position.y < 348.0f)
             {
-                Debug.Log(transform.position.x);
                 switch (touch.phase)
                 {
                     //When a touch has first been detected, change the message and record the starting position
@@ -39,7 +50,7 @@ public class UIDragger : MonoBehaviour
                     case TouchPhase.Moved:
                         // Determine direction by comparing the current touch position with the initial one
                         direction = touch.position - startPos;
-                        transform.position += new Vector3(direction.normalized.x * magnitude, 0.0f, 0.0f);
+                        transform.position += new Vector3(0.0f, direction.normalized.y * magnitude, 0.0f);
                         break;
 
                     case TouchPhase.Ended:
@@ -50,10 +61,22 @@ public class UIDragger : MonoBehaviour
             }
             else
             {
-                if(transform.position.x > 18.1f)   transform.position = new Vector3( 17.5f, transform.position.y, transform.position.z );
-                else if(transform.position.x < -242.0f)
+                if (transform.position.y > 348.0f) transform.position = new Vector3(transform.position.x, 347.0f, transform.position.z);
+                else if (transform.position.y < -347.0f)
                 {
-                    SceneManager.LoadScene("Instagram");
+                    Debug.Log("entroudireto");
+                    foreach (Image img in childrenImage)
+                    {
+                        img.enabled = true;
+                    }
+                    foreach (Text txt in childrenText)
+                    {
+                        txt.enabled = true;
+                    }
+                    foreach (Text txt in sobreText)
+                    {
+                        txt.enabled = false;
+                    }
                 }
             }
         }

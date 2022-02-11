@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Explanation.unity
     guid: 2c0572c4b27f61d4dbe7ae6e63b23b4c
   - enabled: 1
-    path: Assets/Instagram.unity
+    path: Assets/Scenes/Instagram.unity
     guid: c7a6b3608268eef498486d3706adbb2a
   - enabled: 0
     path: Assets/Samples/Google Cardboard XR Plugin for Unity/1.8.0/Hello Cardboard/Scenes/HelloCardboard.unity
