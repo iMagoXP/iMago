@@ -11,17 +11,15 @@ public class UISobre : MonoBehaviour
     private Vector2 direction;
     public float magnitude;
     private bool limit;
-    private GameObject[] panel;
     private Image[] childrenImage;
     private Text[] childrenText;
-    private Text[] sobreText;
+    private Button[] buttons;
 
     void Start()
     {
-        panel = GameObject.FindGameObjectsWithTag("Panel");
-        childrenImage = panel[0].gameObject.GetComponentsInChildren<Image>(true);
-        childrenText = panel[0].gameObject.GetComponentsInChildren<Text>(true);
-        sobreText = panel[1].gameObject.GetComponentsInChildren<Text>(true);
+        buttons = gameObject.transform.parent.gameObject.GetComponentsInChildren<Button>(true);
+        childrenImage = gameObject.transform.parent.gameObject.GetComponentsInChildren<Image>(true);
+        childrenText = gameObject.transform.parent.gameObject.GetComponentsInChildren<Text>(true);
     }
 
     // Start is called before the first frame update
@@ -36,7 +34,7 @@ public class UISobre : MonoBehaviour
             //touchposition = new Vector3(touch.position.x, 0.0f, 0.0f);
             //transform.position -= touchposition.normalized;
             // Debug.Log(touch.position);
-            if (transform.position.y >= -347.0f && transform.position.y < 348.0f)
+            if (transform.position.y >= -118.0f && transform.position.y < 125.0f)
             {
                 switch (touch.phase)
                 {
@@ -61,22 +59,17 @@ public class UISobre : MonoBehaviour
             }
             else
             {
-                if (transform.position.y > 348.0f) transform.position = new Vector3(transform.position.x, 347.0f, transform.position.z);
-                else if (transform.position.y < -347.0f)
+                if (transform.position.y > 125.0f) transform.position = new Vector3(transform.position.x, 123.0f, transform.position.z);
+                else if (transform.position.y < -118.0f)
                 {
-                    Debug.Log("entroudireto");
-                    foreach (Image img in childrenImage)
-                    {
-                        img.enabled = true;
-                    }
-                    foreach (Text txt in childrenText)
-                    {
-                        txt.enabled = true;
-                    }
-                    foreach (Text txt in sobreText)
-                    {
-                        txt.enabled = false;
-                    }
+                    buttons[1].gameObject.SetActive(true);
+                    buttons[0].gameObject.SetActive(true);
+                    childrenImage[1].enabled = true;
+                    childrenImage[4].enabled = true;
+                    childrenText[3].enabled = true;
+                    childrenText[4].enabled = true;
+                    childrenText[5].gameObject.SetActive(false);
+                    childrenText[6].gameObject.SetActive(false);
                 }
             }
         }

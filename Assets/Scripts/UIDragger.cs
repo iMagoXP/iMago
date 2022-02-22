@@ -24,7 +24,7 @@ public class UIDragger : MonoBehaviour
             //transform.position -= touchposition.normalized;
             // Debug.Log(touch.position);
             Debug.Log(transform.position.x);
-            if (transform.position.x < 18.1f && transform.position.x > -242.0f)
+            if (transform.position.x <= 0.0f && transform.position.x > -290.0f)
             {
                 Debug.Log(transform.position.x);
                 switch (touch.phase)
@@ -50,11 +50,34 @@ public class UIDragger : MonoBehaviour
             }
             else
             {
-                if(transform.position.x > 18.1f)   transform.position = new Vector3( 17.5f, transform.position.y, transform.position.z );
-                else if(transform.position.x < -242.0f)
+                if (transform.position.x > 0.0f) transform.position = new Vector3(-1.0f, transform.position.y, transform.position.z);
+                else if (transform.position.x < -290.0f)
                 {
                     SceneManager.LoadScene("Instagram");
                 }
+            }
+        }
+        else
+        {
+            if (transform.position.x > -30.0f)
+            {
+                transform.position = Vector3.Lerp(transform.position, new Vector3(-1.0f, transform.position.y, transform.position.z), 0.25f);
+            }
+            else if (transform.position.x < -30.0f && transform.position.x > -100.0f)
+            {
+                transform.position = Vector3.Lerp(transform.position, new Vector3(-65.0f, transform.position.y, transform.position.z), 0.25f);
+            }
+            else if (transform.position.x < -100.0f && transform.position.x > -170.0f)
+            {
+                transform.position = Vector3.Lerp(transform.position, new Vector3(-130.0f, transform.position.y, transform.position.z), 0.25f);
+            }
+            else if (transform.position.x < -170.0f && transform.position.x > -240.0f)
+            {
+                transform.position = Vector3.Lerp(transform.position, new Vector3(-195.0f, transform.position.y, transform.position.z), 0.25f);
+            }
+            else if (transform.position.x < -227.0f)
+            {
+                transform.position = Vector3.Lerp(transform.position, new Vector3(-260.0f, transform.position.y, transform.position.z), 0.25f);
             }
         }
     }

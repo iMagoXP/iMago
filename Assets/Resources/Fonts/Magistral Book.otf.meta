@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 67f80f44c4c44684e80be1b6e8461e65
+guid: 466d4ea811af11b4c806c1f6866735fd
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,11 +9,12 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Book Antiqua
+  - Magistral
   fallbackFontReferences:
-  - {fileID: 12800000, guid: b013ec45512f8fb4a87fba7dcfd4754a, type: 3}
-  - {fileID: 12800000, guid: b105b5d3d1b0fb544995674491e5c4f5, type: 3}
-  - {fileID: 12800000, guid: 13734ccc9e495734b97fcaea09e78f93, type: 3}
+  - {fileID: 12800000, guid: a3950cb1997d48149b166395d9ceebf7, type: 3}
+  - {fileID: 12800000, guid: c18e6095831908a4388cbfa2e066f048, type: 3}
+  - {fileID: 12800000, guid: 3011a34a12436ce448037a350a248a29, type: 3}
+  - {fileID: 12800000, guid: 92f969291cb39b24794e9708c1e21b79, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

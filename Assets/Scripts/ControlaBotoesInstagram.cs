@@ -6,18 +6,20 @@ using UnityEngine.UI;
 
 public class ControlaBotoesInstagram : MonoBehaviour
 {
-    private Image background;
+    private RawImage background;
     private Button[] buttons;
     private GameObject[] panel;
     private Image[] childrenImage;
     private Text[] childrenText;
-    private Text[] sobreText;
 
     void Start()
     {
-        Time.timeScale = 0;
-        background = gameObject.transform.parent.gameObject.GetComponent<Image>();
+        Scene scene = SceneManager.GetActiveScene();
+        if (scene.name == "Instagram") Time.timeScale = 0;
+        background = gameObject.transform.parent.gameObject.GetComponent<RawImage>();
         buttons = gameObject.transform.parent.gameObject.GetComponentsInChildren<Button>(true);
+        childrenImage = gameObject.transform.parent.gameObject.GetComponentsInChildren<Image>(true);
+        childrenText = gameObject.transform.parent.gameObject.GetComponentsInChildren<Text>(true);
     }
 
     // Start is called before the first frame update
@@ -30,38 +32,32 @@ public class ControlaBotoesInstagram : MonoBehaviour
     public void IniciaCI()
     {
         Time.timeScale = 1;
-
-        childrenImage = gameObject.transform.parent.gameObject.GetComponentsInChildren<Image>(true);
         background.enabled = false;
-        childrenText = gameObject.transform.parent.gameObject.GetComponentsInChildren<Text>(true);
         buttons[1].gameObject.SetActive(false);
         buttons[0].gameObject.SetActive(false);
-        childrenImage[4].gameObject.SetActive(true);
+        childrenImage[3].gameObject.SetActive(true);
+        childrenText[0].gameObject.SetActive(false);
         childrenText[2].gameObject.SetActive(false);
     }
-
-    public void OpenUrlManual()
+    
+    public void VamosPassear()
     {
-        Application.OpenURL("https://arvr.google.com/intl/pt-BR_pt/cardboard/manufacturers/");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void Sobre()
     {
-        panel = GameObject.FindGameObjectsWithTag("Panel");
-        childrenImage = panel[0].gameObject.GetComponentsInChildren<Image>(true);
-        childrenText = panel[0].gameObject.GetComponentsInChildren<Text>(true);
-        foreach (Image img in childrenImage)
-        {
-            img.enabled = false;
-        }
-        foreach (Text txt in childrenText)
-        {
-            txt.enabled = false;
-        }
-        sobreText = panel[1].gameObject.GetComponentsInChildren<Text>(true);
-        foreach (Text txt in sobreText)
-        {
-            txt.gameObject.SetActive(true);
-        }
+        buttons[1].gameObject.SetActive(false);
+        buttons[0].gameObject.SetActive(false);
+        childrenImage[1].enabled = false;
+        childrenImage[4].enabled = false;
+        childrenText[3].enabled = false;
+        childrenText[4].gameObject.SetActive(true);
+        childrenText[5].gameObject.SetActive(true);
+    }
+
+    public void BaixarManual()
+    {
+        Application.OpenURL("https://arvr.google.com/intl/pt-BR_pt/cardboard/manufacturers/");
     }
 }

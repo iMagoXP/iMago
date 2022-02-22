@@ -10,22 +10,22 @@ public class OrientationController : MonoBehaviour
     void Awake()
     {
         Scene scene = SceneManager.GetActiveScene();
-
         if (scene.name == "Explanation" || scene.name == "Interface")
         {
-            Screen.orientation = ScreenOrientation.Portrait;
             Screen.autorotateToPortrait = true;
             Screen.autorotateToPortraitUpsideDown = true;
             Screen.autorotateToLandscapeLeft = false;
             Screen.autorotateToLandscapeRight = false;
+            Screen.orientation = ScreenOrientation.Portrait;
         }
         else if (scene.name == "Instagram")
         {
-            Screen.orientation = ScreenOrientation.LandscapeLeft;
             Screen.autorotateToPortrait = false;
             Screen.autorotateToPortraitUpsideDown = false;
             Screen.autorotateToLandscapeLeft = true;
             Screen.autorotateToLandscapeRight = true;
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
         }
     }
+
 }

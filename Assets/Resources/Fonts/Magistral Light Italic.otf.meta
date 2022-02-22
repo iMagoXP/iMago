@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: a3950cb1997d48149b166395d9ceebf7
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Magistral
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: c18e6095831908a4388cbfa2e066f048, type: 3}
+  - {fileID: 12800000, guid: 3011a34a12436ce448037a350a248a29, type: 3}
+  - {fileID: 12800000, guid: 92f969291cb39b24794e9708c1e21b79, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
