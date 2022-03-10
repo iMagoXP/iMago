@@ -2,14 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Google.XR.Cardboard;
+using UnityEngine.XR;
+using UnityEngine.XR.Management;
 
 public class OrientationController : MonoBehaviour
 {
-    
-    // Start is called before the first frame update
+    private Scene scene;
+    private float dt;
+    private bool vrOn;
+
     void Awake()
     {
-        Scene scene = SceneManager.GetActiveScene();
+        scene = SceneManager.GetActiveScene();
+        dt = 0.0f;
+        vrOn = false;
+
         if (scene.name == "Explanation" || scene.name == "Interface")
         {
             Screen.autorotateToPortrait = true;
@@ -28,4 +36,32 @@ public class OrientationController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        dt += Time.deltaTime;
+        if (scene.name == "Instagram" && dt > 2.0f && vrOn == false) StartVR();
+    }
+
+    IEnumerator EnterVr()
+    {
+        yield return XRGeneralSettings.Instance.Manager.InitializeLoader();
+
+        if (XRGeneralSettings.Instance.Manager.activeLoader == null)
+        {
+            Debug.Log("Initializing XR Failed.");
+        }
+        else
+        {
+            XRGeneralSettings.Instance.Manager.StartSubsystems();
+        }
+    }
+    
+    public void StartVR()
+    {
+        StartCoroutine(EnterVr());
+        if (Api.HasNewDeviceParams())
+        {
+            Api.ReloadDeviceParams();
+        }
+    }
 }

@@ -8,6 +8,8 @@ TagManager:
   - Sobre
   - Iniciar
   - Panel
+  - ImageSpawners
+  - Carrousel
   layers:
   - Default
   - TransparentFX

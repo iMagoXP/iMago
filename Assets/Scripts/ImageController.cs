@@ -8,11 +8,8 @@ public class ImageController : MonoBehaviour
     float timer = 0.0f;
     [SerializeField]
     float actionTime;
-    private Animator animator;
-
-    void Start()
-    {
-    }
+    private Animator animatorFade;
+    private Animator[] animatorLike;
 
     void Update()
     {
@@ -23,9 +20,12 @@ public class ImageController : MonoBehaviour
             {
                 Material mats = gameObject.GetComponent<Renderer>().material;
                 mats.SetColor("_Color", new Color(1.0f, 0.0f, 0.0f, 1.0f));
-                gameObject.transform.parent.gameObject.transform.GetChild(2).gameObject.SetActive(true);
-                animator = gameObject.transform.parent.gameObject.GetComponent<Animator>();
-                animator.Play("PrefabFade");
+                animatorLike = gameObject.transform.parent.gameObject.GetComponentsInChildren<Animator>();
+                animatorLike[0].enabled = true;
+                animatorLike[1].enabled = true;
+                animatorLike[2].enabled = true;
+                animatorFade = gameObject.transform.parent.gameObject.GetComponent<Animator>();
+                animatorFade.Play("PrefabFade");
             }
         }
     }
