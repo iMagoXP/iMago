@@ -11,6 +11,7 @@ public class UIButtonController : MonoBehaviour
     private GameObject[] panel;
     private Image[] childrenImage;
     private Text[] childrenText;
+    private AudioSource audioSource;
     private int state;
     private float dt;
 
@@ -23,11 +24,13 @@ public class UIButtonController : MonoBehaviour
         buttons = gameObject.transform.parent.gameObject.GetComponentsInChildren<Button>(true);
         childrenImage = gameObject.transform.parent.gameObject.GetComponentsInChildren<Image>(true);
         childrenText = gameObject.transform.parent.gameObject.GetComponentsInChildren<Text>(true);
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
     public void Volta()
     {
+        audioSource.Play();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
         Debug.Log("hi");
     }
@@ -35,6 +38,7 @@ public class UIButtonController : MonoBehaviour
     // Update is called once per frame
     public void IniciaCI()
     {
+        audioSource.Play();
         Time.timeScale = 1;
         background.enabled = false;
         buttons[1].gameObject.SetActive(false);
@@ -46,15 +50,15 @@ public class UIButtonController : MonoBehaviour
     
     public void VamosPassear()
     {
+        audioSource.Play();
         childrenImage[5].color = new Color(0, 0, 0, 10);
         childrenImage[5].CrossFadeAlpha(1, 1.5f, false);
         state = 1;
-
-        
     }
 
     public void Sobre()
     {
+        audioSource.Play();
         buttons[1].gameObject.SetActive(false);
         buttons[0].gameObject.SetActive(false);
         childrenImage[1].enabled = false;
@@ -62,6 +66,7 @@ public class UIButtonController : MonoBehaviour
         childrenText[3].enabled = false;
         childrenText[4].enabled = false;
         childrenImage[6].enabled = true;
+        childrenImage[7].enabled = true;
         childrenText[5].gameObject.SetActive(true);
         childrenText[6].gameObject.SetActive(true);
         childrenText[7].gameObject.SetActive(true);
@@ -72,6 +77,7 @@ public class UIButtonController : MonoBehaviour
 
     public void BaixarManual()
     {
+        audioSource.Play();
         Application.OpenURL("https://drive.google.com/file/d/0B1LtQQO3eKRfV0E1SjZHa3V6ME0/view?resourcekey=0-Z9JXvZZoxhV51o4NAjk3Cw");
     }
 

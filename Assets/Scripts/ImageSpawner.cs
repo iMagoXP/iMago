@@ -23,6 +23,15 @@ public class ImageSpawner : MonoBehaviour
     protected float imagesPerSecondIncrement;
 
     [SerializeField]
+    protected float maxHeight;
+    [SerializeField]
+    protected float minHeight;
+    [SerializeField]
+    protected float minDistance;
+    [SerializeField]
+    protected float maxDistance;
+
+    [SerializeField]
     protected float imageLevelCooldown;
     protected float imageLevelTimer;
 
@@ -36,11 +45,11 @@ public class ImageSpawner : MonoBehaviour
         textures = LoadTextures();
         SetTimers();
         images_scales = new float[5];
-        images_scales[0] = 2.0f;
-        images_scales[1] = 4.0f;
-        images_scales[2] = 6.0f;
-        images_scales[3] = 8.0f;
-        images_scales[4] = 1.0f;
+        images_scales[0] = 2.5f;
+        images_scales[1] = 5.0f;
+        images_scales[2] = 7.5f;
+        images_scales[3] = 10.0f;
+        images_scales[4] = 1.25f;
 
     }
 
@@ -133,8 +142,8 @@ public class ImageSpawner : MonoBehaviour
 
         if (Mathf.Abs(row) >= rotatedRows)
         {
-            pos.z += Random.Range(-1.0f, 1.0f);
-            pos.y += Random.Range(-0.5f, 0.5f);
+            pos.z += Random.Range(minDistance, maxDistance);
+            pos.y += Random.Range(minHeight, maxHeight);
         }
 
         return pos;

@@ -11,7 +11,12 @@ public class UIController : MonoBehaviour
     private Text[] texto;
     private AspectRatioFitter aspectRatioFitter;
     private Resolution resolution;
-    public float screenTime;
+    [SerializeField]
+    private float screenTimeOffScreen;
+    [SerializeField]
+    private float screenTimeOnScreen;
+    [SerializeField]
+    private float startTime;
     [SerializeField]
     private float transitions;
     private int state = 0;
@@ -26,17 +31,24 @@ public class UIController : MonoBehaviour
         aspectRatioFitter = gameObject.GetComponentInChildren< AspectRatioFitter >(true);
         buttons[0].enabled = false;
         buttons[1].enabled = false;
+        image[0].CrossFadeAlpha(0, 0.1f, false);
+    }
+
+    void Start()
+    {
+        image[5].CrossFadeAlpha(0, 1.5f, false);
     }
 
     // Update is called once per frame
     void Update()
     {
         dt += Time.deltaTime;
-        if (dt > screenTime && state <= 7)
+        if ((startTime > 0  && dt > startTime) || (dt > screenTimeOnScreen && state <= 7 && state%2 != 0)|| (dt > screenTimeOffScreen && state <= 7))
         {
             UpdateUI(state);
             state++;
             dt = 0;
+            if (state == 2) startTime = 0;
         }
 
     }
@@ -46,7 +58,7 @@ public class UIController : MonoBehaviour
         switch (state)
         {
             case 1:
-                image[5].CrossFadeAlpha(0, transitions, false);
+                image[0].CrossFadeAlpha(1, transitions, false);
                 break;
 
             case 2:
@@ -68,12 +80,14 @@ public class UIController : MonoBehaviour
                 texto[1].text = "  Vamos passear ? ";
                 texto[2].text = "  Sobre o projeto  ";
                 texto[3].text = " iMago ";
-                texto[4].text = " 2021 ";
+                texto[4].text = " 2021-22 ";
                 texto[0].CrossFadeAlpha(1, transitions, false);
                 break;
+
             case 4:
                 texto[0].CrossFadeAlpha(0, transitions, false);
                 break;
+
             case 5:
                 image[1].sprite = Resources.Load<Sprite>("UI/220202 Cidade Instagram - Artboards__Logo Cidade Instagram");
                 image[1].color = new Color(255, 255, 255, 100);
@@ -84,6 +98,7 @@ public class UIController : MonoBehaviour
                 image[4].color = new Color(255, 255, 255, 100);
                 image[4].CrossFadeAlpha(1, transitions, false);
                 break;
+
             case 6:
                 image[2].sprite = Resources.Load<Sprite>("UI/220202 Cidade Instagram - Artboards__Botão");
                 image[2].color = new Color(255, 255, 255, 100);

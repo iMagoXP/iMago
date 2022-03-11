@@ -10,6 +10,7 @@ public class UIDragger : MonoBehaviour
     private Vector2 startPos;
     private Vector2 direction;
     private Image[] childrenImage;
+    private Image[] parentImage;
     public float magnitude;
     private bool limit;
     private float dt;
@@ -29,16 +30,22 @@ public class UIDragger : MonoBehaviour
             objectName = gameObject.name;
             if(objectName != "MuralSobre")
             {
-                buttons = gameObject.transform.parent.gameObject.transform.parent.gameObject.GetComponentsInChildren<Button>(true);
-                childrenImage = gameObject.transform.parent.gameObject.transform.parent.gameObject.GetComponentsInChildren<Image>(true);
-                childrenText = gameObject.transform.parent.gameObject.transform.parent.gameObject.GetComponentsInChildren<Text>(true);
+                buttons = gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.GetComponentsInChildren<Button>(true);
+                childrenImage = gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.GetComponentsInChildren<Image>(true);
+                childrenText = gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.GetComponentsInChildren<Text>(true);
                 scriptMural = gameObject.transform.parent.gameObject.GetComponent<UIDragger>();
             }
+            else if(objectName == "MuralSobre")
+            {
+                parentImage = gameObject.transform.parent.gameObject.GetComponentsInChildren<Image>(true);
+            }
+
             apertou = false;
         }
         if(scene.name == "Explanation")
         {
             childrenImage = gameObject.GetComponentsInChildren<Image>(true);
+            parentImage = gameObject.transform.parent.gameObject.GetComponentsInChildren<Image>(true);
         }
     }
     
@@ -73,7 +80,11 @@ public class UIDragger : MonoBehaviour
                 {
                     if (direction.x > 85.0f || direction.x < -85.0f) transform.localPosition += new Vector3(direction.normalized.x * magnitude, 0.0f, 0.0f);
                 }
-                else if(objectName == "Sobre" || objectName == "FichaTecnica" || objectName == "LabGeist") transform.localPosition += new Vector3(0.0f, direction.normalized.y * magnitude, 0.0f);
+                else if(objectName == "LabGeist")
+                {
+                    if (direction.y < 0) transform.localPosition += new Vector3(0.0f, direction.normalized.y * magnitude, 0.0f);
+                }
+                else if(objectName == "Sobre" || objectName == "FichaTecnica") transform.localPosition += new Vector3(0.0f, direction.normalized.y * magnitude, 0.0f);
                 else transform.localPosition += new Vector3(direction.normalized.x * magnitude, 0.0f, 0.0f);
                 break;
 
@@ -110,13 +121,13 @@ public class UIDragger : MonoBehaviour
     {
         if (Input.touchCount > 0 && apertou == true && transform.parent.transform.localPosition.x < -562.5f && transform.parent.transform.localPosition.x > -1687.5f)
         {
-            if (transform.localPosition.y >= -250.0f && transform.localPosition.y < 3200.0f)
+            if (transform.localPosition.y >= -250.0f && transform.localPosition.y < 3086.0f)
             {
                 manageTouch();
             }
             else
             {
-                if (transform.localPosition.y > 3200.0f) correctPositionY(3199.0f);
+                if (transform.localPosition.y > 3086.0f) correctPositionY(3085.0f);
                 else if (transform.localPosition.y < -249.0f)
                 {
                     disableSobre();
@@ -134,13 +145,13 @@ public class UIDragger : MonoBehaviour
         if (Input.touchCount > 0 && apertou == true && transform.parent.transform.localPosition.x < 0.0f && transform.parent.transform.localPosition.x > -562.5f)
         {
 
-            if (transform.localPosition.y >= -250.0f && transform.localPosition.y < 6300.0f)
+            if (transform.localPosition.y >= -250.0f && transform.localPosition.y < 7483.0f)
             {
                 manageTouch();
             }
             else
             {
-                if (transform.localPosition.y > 6300.0f) correctPositionY(6299.0f);
+                if (transform.localPosition.y > 7483.0f) correctPositionY(7482.0f);
                 else if (transform.localPosition.y < -249.0f)
                 {
                     disableSobre();
@@ -191,15 +202,23 @@ public class UIDragger : MonoBehaviour
         }
         else
         {
-            if (transform.localPosition.x > -562.5f) lerpPosition(-1.0f);
-            else if (transform.localPosition.x < -562.5f && transform.localPosition.x > -1687.5f) lerpPosition(-1125.0f);
+            if (transform.localPosition.x > -562.5f)
+            {
+                parentImage[2].enabled = false;
+                lerpPosition(-1.0f);
+            }
+            else if (transform.localPosition.x < -562.5f && transform.localPosition.x > -1687.5f)
+            {
+                parentImage[2].enabled = true;
+                lerpPosition(-1125.0f);
+            }
             else if (transform.localPosition.x < -1687.5f && transform.localPosition.x > -2812.5f) lerpPosition(-2250.0f);
             else if (transform.localPosition.x < -2812.5f && transform.localPosition.x > -3937.5f) lerpPosition(-3375.0f);
             else if (transform.localPosition.x < -3937.5f && transform.localPosition.x > -5000.0f) lerpPosition(-4500f);
             else if (transform.localPosition.x < -5000.0f && transform.localPosition.x > -6125.0f)
             {
                 lerpPosition(-5600.5f);
-                childrenImage[15].CrossFadeAlpha(1, 0.5f, false);
+                childrenImage[7].CrossFadeAlpha(1, 0.5f, false);
             }
         }
     }
@@ -208,21 +227,31 @@ public class UIDragger : MonoBehaviour
     {
         if (Input.touchCount > 0 && apertou == true)
         {
-            if (transform.localPosition.x <= 0.0f && transform.localPosition.x > -2250.0f)
+            if (transform.localPosition.x <= 0.0f && transform.localPosition.x > -4500.0f)
             {
                 manageTouch();
             }
             else
             {
                 if (transform.localPosition.x > 0.0f) correctPositionX(-1.0f);
-                else if (transform.localPosition.x < 2250.0f) correctPositionX(-2249.0f);
+                else if (transform.localPosition.x < -4500.0f) correctPositionX(-4499.0f);
             }
         }
         else
         {
-            if (transform.localPosition.x > -562.5f) lerpPosition(-1.0f);
-            else if (transform.localPosition.x < -562.5f && transform.localPosition.x > -1687.5f) lerpPosition(-1125.0f);
+            if (transform.localPosition.x > -562.5f)
+            {
+                parentImage[1].enabled = false;
+                lerpPosition(-1.0f);
+            }
+            else if (transform.localPosition.x < -562.5f && transform.localPosition.x > -1687.5f)
+            {
+                parentImage[1].enabled = true;
+                lerpPosition(-1125.0f);
+            }
             else if (transform.localPosition.x < -1687.5f && transform.localPosition.x > -2812.5f) lerpPosition(-2250.0f);
+            else if (transform.localPosition.x < -1687.5f && transform.localPosition.x > -3937.5f) lerpPosition(-3375.0f);
+            else if (transform.localPosition.x < -3937.5f && transform.localPosition.x > -5062.5f) lerpPosition(-4500.0f);
         }
 
     }

@@ -17,7 +17,7 @@ TagManager:
   - Image
   - Water
   - UI
-  - 
+  - "Bot\xE3o"
   - 
   - 
   - 
@@ -46,4 +46,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 166158751
     locked: 0
