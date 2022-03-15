@@ -32,18 +32,23 @@ public class UIController : MonoBehaviour
         buttons[0].enabled = false;
         buttons[1].enabled = false;
         image[0].CrossFadeAlpha(0, 0.1f, false);
+        image[5].CrossFadeAlpha(0, 0.1f, false);
+        image[6].CrossFadeAlpha(0, 0.1f, false);
+        image[7].CrossFadeAlpha(0, 0.1f, false);
     }
 
     void Start()
     {
-        image[5].CrossFadeAlpha(0, 1.5f, false);
+        image[13].CrossFadeAlpha(0, 1.5f, false);
+        texto[5].CrossFadeAlpha(0, 0.1f, false);
+        texto[6].CrossFadeAlpha(0, 0.1f, false);
     }
 
     // Update is called once per frame
     void Update()
     {
         dt += Time.deltaTime;
-        if ((startTime > 0  && dt > startTime) || (dt > screenTimeOnScreen && state <= 7 && state%2 != 0)|| (dt > screenTimeOffScreen && state <= 7))
+        if ((startTime > 0  && dt > startTime) || (dt > screenTimeOnScreen && state <= 7 && state%2 == 0)|| (dt > screenTimeOffScreen && state <= 7 && state % 2 != 0))
         {
             UpdateUI(state);
             state++;
@@ -67,7 +72,6 @@ public class UIController : MonoBehaviour
                 image[2].CrossFadeAlpha(0, transitions, false);
                 image[3].CrossFadeAlpha(0, transitions, false);
                 image[4].CrossFadeAlpha(0, transitions, false);
-                image[5].CrossFadeAlpha(0, transitions, false);
                 texto[0].CrossFadeAlpha(0, transitions, false);
                 texto[1].CrossFadeAlpha(0, transitions, false);
                 texto[2].CrossFadeAlpha(0, transitions, false);

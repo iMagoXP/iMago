@@ -14,26 +14,31 @@ public class UIDragger : MonoBehaviour
     public float magnitude;
     private bool limit;
     private float dt;
+    private float fadeOutTimer;
     private Text[] childrenText;
     private Button[] buttons;
     public bool apertou;
     private UIDragger scriptMural;
     public string objectName;
     private Scene scene;
+    private GameObject panel;
+    private bool apertouX = false;
 
     // Start is called before the first frame update
     void Start()
     {
         scene = SceneManager.GetActiveScene();
-        if(scene.name == "Interface")
+        objectName = gameObject.name;
+
+        if (scene.name == "Interface")
         {
-            objectName = gameObject.name;
             if(objectName != "MuralSobre")
             {
-                buttons = gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.GetComponentsInChildren<Button>(true);
-                childrenImage = gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.GetComponentsInChildren<Image>(true);
-                childrenText = gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.GetComponentsInChildren<Text>(true);
-                scriptMural = gameObject.transform.parent.gameObject.GetComponent<UIDragger>();
+                panel = GameObject.Find("Panel");
+                buttons = panel.gameObject.GetComponentsInChildren<Button>(true);
+                childrenImage = panel.gameObject.GetComponentsInChildren<Image>(true);
+                childrenText = panel.gameObject.GetComponentsInChildren<Text>(true);
+                scriptMural = GameObject.Find("MuralSobre").gameObject.GetComponent<UIDragger>();
             }
             else if(objectName == "MuralSobre")
             {
@@ -42,7 +47,7 @@ public class UIDragger : MonoBehaviour
 
             apertou = false;
         }
-        if(scene.name == "Explanation")
+        else if(scene.name == "Explanation")
         {
             childrenImage = gameObject.GetComponentsInChildren<Image>(true);
             parentImage = gameObject.transform.parent.gameObject.GetComponentsInChildren<Image>(true);
@@ -52,11 +57,48 @@ public class UIDragger : MonoBehaviour
     
     void Update()
     {
-        if(objectName == "Sobre") sobre();
-        else if(objectName == "FichaTecnica") fichaTecnica();
-        else if(objectName == "MuralSobre") muralSobre();
-        else if(objectName == "LabGeist") labGeist();
-        else if(scene.name == "Explanation") explanation();
+
+        switch (objectName)
+        {
+            case "Sobre":
+                verticalPanelsDrag(0.0f, -250.0f, 7500.0f);
+                break;
+
+            case "FichaTecnica":
+                verticalPanelsDrag(1.0f, -250.0f, 3050.0f);
+                break;
+
+            case "LabGeist":
+                verticalPanelsDrag(2.0f, -250.0f, 2000.0f);
+                break;
+
+            case "RITe":
+                verticalPanelsDrag(3.0f, -250.0f, 5.0f);
+                break;
+
+            case "TrilhaEfeitosSonoros":
+                verticalPanelsDrag(4.0f, -250.0f, 5.0f);
+                break;
+
+            case "MuralSobre":
+                muralSobre();
+                break;
+
+            case "MuralExplanation":
+                muralExplanation();
+                break;
+        }
+
+        if(apertouX == true)
+        {
+            fadeOutTimer += Time.deltaTime;
+            disableSobre();
+            if(fadeOutTimer > 1.0f)
+            {
+                enableHome();
+                apertouX = false;
+            }
+        }
     }
 
     private void manageTouch() 
@@ -78,14 +120,10 @@ public class UIDragger : MonoBehaviour
                 direction = touch.position - startPos;
                 if (objectName == "MuralSobre")
                 {
-                    if (direction.x > 85.0f || direction.x < -85.0f) transform.localPosition += new Vector3(direction.normalized.x * magnitude, 0.0f, 0.0f);
+                    if (direction.x > 88.0f || direction.x < -88.0f) transform.localPosition += new Vector3(direction.normalized.x * magnitude, 0.0f, 0.0f);
                 }
-                else if(objectName == "LabGeist")
-                {
-                    if (direction.y < 0) transform.localPosition += new Vector3(0.0f, direction.normalized.y * magnitude, 0.0f);
-                }
-                else if(objectName == "Sobre" || objectName == "FichaTecnica") transform.localPosition += new Vector3(0.0f, direction.normalized.y * magnitude, 0.0f);
-                else transform.localPosition += new Vector3(direction.normalized.x * magnitude, 0.0f, 0.0f);
+                else if(objectName == "MuralExplanation") transform.localPosition += new Vector3(direction.normalized.x * magnitude, 0.0f, 0.0f);
+                else transform.localPosition += new Vector3(0.0f, direction.normalized.y * magnitude, 0.0f);
                 break;
 
             case TouchPhase.Ended:
@@ -97,91 +135,67 @@ public class UIDragger : MonoBehaviour
 
     private void disableSobre()
     {
-        buttons[1].gameObject.SetActive(true);
-        buttons[0].gameObject.SetActive(true);
-        childrenImage[1].enabled = true;
-        childrenImage[4].enabled = true;
-        childrenText[3].enabled = true;
-        childrenText[4].enabled = true;
-        childrenText[5].enabled = true;
-        childrenImage[6].enabled = false;
-        childrenText[5].gameObject.SetActive(false);
-        childrenText[6].gameObject.SetActive(false);
-        childrenText[7].gameObject.SetActive(false);
-        childrenText[8].gameObject.SetActive(false);
-        childrenText[9].gameObject.SetActive(false);
-        childrenText[10].gameObject.SetActive(false);
-        transform.localPosition = new Vector3(transform.localPosition.x, 0.0f, transform.localPosition.z);
-        transform.parent.transform.localPosition = new Vector3(0.0f, transform.localPosition.y, transform.localPosition.z);
+        childrenImage[5].CrossFadeAlpha(0, 0.5f, false);
+        childrenImage[6].CrossFadeAlpha(0, 0.5f, false);
+        childrenImage[7].CrossFadeAlpha(0, 0.5f, false);
+        childrenText[5].CrossFadeAlpha(0, 0.5f, false);
+        childrenText[6].CrossFadeAlpha(0, 0.5f, false);
+    }
+
+    private void enableHome()
+    {
+        buttons[1].enabled = true;
+        buttons[0].enabled = true;
+
+        childrenText[1].CrossFadeAlpha(1, 1.5f, false);
+        childrenText[2].CrossFadeAlpha(1, 1.5f, false);
+        childrenImage[1].CrossFadeAlpha(1, 1.5f, false);
+        childrenImage[2].CrossFadeAlpha(1, 1.5f, false);
+        childrenImage[3].CrossFadeAlpha(1, 1.5f, false);
+        childrenImage[4].CrossFadeAlpha(1, 1.5f, false);
+        childrenText[3].CrossFadeAlpha(1, 1.5f, false);
+        childrenText[4].CrossFadeAlpha(1, 1.5f, false);
+
+        if (objectName != "X") transform.localPosition = new Vector3(transform.localPosition.x, 0.0f, transform.localPosition.z);
+        else if (objectName == "X") gameObject.GetComponent<Image>().CrossFadeAlpha(0, 0.5f, false);
+        GameObject.Find("MuralSobre").transform.localPosition = new Vector3(0.0f, 0.0f, transform.localPosition.z);
+
         apertou = false;
         scriptMural.apertou = false;
     }
 
-    private void fichaTecnica()
+    public void verticalPanelsDrag(float panelNumber, float disableHeight, float maxHeight)
     {
-        if (Input.touchCount > 0 && apertou == true && transform.parent.transform.localPosition.x < -562.5f && transform.parent.transform.localPosition.x > -1687.5f)
+        float parentMinPosition;
+        float parentMaxPosition;
+
+        parentMinPosition = (-1125.0f * panelNumber) + 200;
+        parentMaxPosition = (-1125.0f * panelNumber) - 200 ;
+
+        if (Input.touchCount > 0 && apertou == true && transform.parent.transform.localPosition.x < parentMinPosition && transform.parent.transform.localPosition.x > parentMaxPosition)
         {
-            if (transform.localPosition.y >= -250.0f && transform.localPosition.y < 3086.0f)
+
+            if (transform.localPosition.y >= disableHeight && transform.localPosition.y < maxHeight)
             {
                 manageTouch();
             }
             else
             {
-                if (transform.localPosition.y > 3086.0f) correctPositionY(3085.0f);
-                else if (transform.localPosition.y < -249.0f)
+                if (transform.localPosition.y > maxHeight) correctPositionY(maxHeight-1);
+                else if (transform.localPosition.y < disableHeight-1)
                 {
                     disableSobre();
+                    enableHome();
                 }
             }
         }
-        else if (transform.parent.transform.localPosition.x > -562.5f || transform.parent.transform.localPosition.x < -1687.5f)
+        else if (transform.parent.transform.localPosition.x < parentMaxPosition)
         {
             resetPosition();
         }
     }
 
-    private void sobre()
-    {
-        if (Input.touchCount > 0 && apertou == true && transform.parent.transform.localPosition.x < 0.0f && transform.parent.transform.localPosition.x > -562.5f)
-        {
-
-            if (transform.localPosition.y >= -250.0f && transform.localPosition.y < 7483.0f)
-            {
-                manageTouch();
-            }
-            else
-            {
-                if (transform.localPosition.y > 7483.0f) correctPositionY(7482.0f);
-                else if (transform.localPosition.y < -249.0f)
-                {
-                    disableSobre();
-                }
-            }
-        }
-        else if (transform.parent.transform.localPosition.x < -562.5f)
-        {
-            resetPosition();
-        }
-    }
-    
-    private void labGeist()
-    {
-        if (Input.touchCount > 0 && apertou == true && transform.parent.transform.localPosition.x < -1687.5f && transform.parent.transform.localPosition.x > -2812.5f)
-        {
-
-            if (transform.localPosition.y >= -250.0f)
-            {
-                manageTouch();
-            }
-            else if (transform.localPosition.y < -249.0f) disableSobre();
-        }
-        else if (transform.parent.transform.localPosition.x < -562.5f)
-        {
-            resetPosition();
-        }
-    }
-
-    private void explanation()
+    private void muralExplanation()
     {
         if (transform.localPosition.x < -5000.0f)
         {
@@ -195,21 +209,18 @@ public class UIDragger : MonoBehaviour
             {
                 manageTouch();
             }
-            else
-            {
-                if (transform.localPosition.x > 0.0f) correctPositionX(-1.0f);
-            }
+            else if (transform.localPosition.x > 0.0f) correctPositionX(-1.0f);
         }
         else
         {
             if (transform.localPosition.x > -562.5f)
             {
-                parentImage[2].enabled = false;
+                parentImage[2].CrossFadeAlpha(0, 0.5f, false);
                 lerpPosition(-1.0f);
             }
             else if (transform.localPosition.x < -562.5f && transform.localPosition.x > -1687.5f)
             {
-                parentImage[2].enabled = true;
+                parentImage[2].CrossFadeAlpha(1, 0.5f, false);
                 lerpPosition(-1125.0f);
             }
             else if (transform.localPosition.x < -1687.5f && transform.localPosition.x > -2812.5f) lerpPosition(-2250.0f);
@@ -241,17 +252,25 @@ public class UIDragger : MonoBehaviour
         {
             if (transform.localPosition.x > -562.5f)
             {
-                parentImage[1].enabled = false;
+                parentImage[1].CrossFadeAlpha(0, 0.5f, false);
                 lerpPosition(-1.0f);
             }
             else if (transform.localPosition.x < -562.5f && transform.localPosition.x > -1687.5f)
             {
-                parentImage[1].enabled = true;
+                parentImage[1].CrossFadeAlpha(1, 0.5f, false);
                 lerpPosition(-1125.0f);
             }
             else if (transform.localPosition.x < -1687.5f && transform.localPosition.x > -2812.5f) lerpPosition(-2250.0f);
-            else if (transform.localPosition.x < -1687.5f && transform.localPosition.x > -3937.5f) lerpPosition(-3375.0f);
-            else if (transform.localPosition.x < -3937.5f && transform.localPosition.x > -5062.5f) lerpPosition(-4500.0f);
+            else if (transform.localPosition.x < -1687.5f && transform.localPosition.x > -3937.5f)
+            {
+                lerpPosition(-3375.0f);
+                parentImage[0].CrossFadeAlpha(1, 0.5f, false);
+            }
+            else if (transform.localPosition.x < -3937.5f && transform.localPosition.x > -5062.5f)
+            {
+                lerpPosition(-4500.0f);
+                parentImage[0].CrossFadeAlpha(0, 0.5f, false);
+            }
         }
 
     }
@@ -274,6 +293,11 @@ public class UIDragger : MonoBehaviour
     public void ApertouBotão()
     {
         apertou = true;
+    }
+
+    public void apertaX()
+    {
+        apertouX = true;
     }
 
     private void resetPosition()

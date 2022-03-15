@@ -601,6 +601,7 @@ GameObject:
   - component: {fileID: 217444456}
   - component: {fileID: 217444455}
   - component: {fileID: 217444454}
+  - component: {fileID: 217444457}
   m_Layer: 5
   m_Name: X
   m_TagString: Untagged
@@ -646,7 +647,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -670,7 +671,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 217444455}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 217444457}
+        m_TargetAssemblyTypeName: UIDragger, script
+        m_MethodName: apertaX
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &217444455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -678,7 +691,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 217444452}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -709,6 +722,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 217444452}
   m_CullTransparentMesh: 1
+--- !u!114 &217444457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217444452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1be247222555ea945990cf0c29f3e98a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  magnitude: 0
+  apertou: 0
+  objectName: 
 --- !u!1 &264585460
 GameObject:
   m_ObjectHideFlags: 0
@@ -741,7 +769,7 @@ Transform:
   - {fileID: 217444453}
   - {fileID: 584717097}
   m_Father: {fileID: 1758023886}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &271989785
 GameObject:
@@ -825,7 +853,6 @@ GameObject:
   - component: {fileID: 381626055}
   - component: {fileID: 381626058}
   - component: {fileID: 381626057}
-  - component: {fileID: 381626056}
   m_Layer: 5
   m_Name: SetaDireita
   m_TagString: Untagged
@@ -852,50 +879,6 @@ RectTransform:
   m_AnchoredPosition: {x: 505, y: 0}
   m_SizeDelta: {x: 15, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &381626056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 381626054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 381626057}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &381626057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -903,7 +886,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 381626054}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -1324,12 +1307,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 597845627}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1758023886}
-  m_RootOrder: 6
+  m_Father: {fileID: 1746254774}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1568,7 +1551,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &632485888
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1602,7 +1585,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1622,7 +1605,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "Cansado da tendinite ao rolar seus dedos por feeds e stories em busca
-    das novidades incr\xEDveis da vida alheia das pesooas que voc\xEA tanto conhece
+    das novidades incr\xEDveis da vida alheia das pesoas que voc\xEA tanto conhece
     e/ou admira? Cansado dos obst\xE1culos que a realidade concreta te imp\xF5e,
     atrapalhando sua experi\xEAncia no mundo digital? Ent\xE3o prepare seu visor
     estereosc\xF3pico preferido de realidade virtual, pois A cidade Instagram chegou!
@@ -1644,7 +1627,7 @@ MonoBehaviour:
     ser\xE3o todas transferidas de nossa mem\xF3ria computacional, programada, eterna
     e infal\xEDvel, de froma instant\xE2nea para a sua mem\xF3ria cerebral, diretamente
     para o seu hipocampo, para que ele possa armazen\xE1-las para todo o sempre!\n\nIsto
-    \xE9, assim o desejar.\n\nOu conseguir.\n\n\n\n\n\n\n\n\n\n\n\n    O algoritmo
+    \xE9, assim o desejar.\n\nOu conseguir.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n    O algoritmo
     de exclus\xE3o de imagens desinteressantes j\xE1 se encontra em desenvolvimento,
     mas ainda pode levar um tempo para ser devidamente treinado;\n\n      Certamente
     a comunica\xE7\xE3o com o Metaverso estar\xE1 dispon\xEDvel nas pr\xF3ximas atualiza\xE7\xF5es;\n\n       
@@ -1755,7 +1738,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &737367935
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1851,8 +1834,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.1984, y: -147}
-  m_SizeDelta: {x: 858.4118, y: 1737.604}
+  m_AnchoredPosition: {x: 5.1984, y: -1184.4283}
+  m_SizeDelta: {x: 858.4118, y: 3812.4604}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &737729569
 MonoBehaviour:
@@ -1887,12 +1870,20 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: A O LabGeist Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-    do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-    dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-    sunt in culpa qui officia deserunt mollit anim id est laborum."
+  m_Text: "iMago \xE9 uma plataforma virtual, interativa, imersiva e transmidi\xE1tica,
+    que compartilha a produ\xE7\xE3o te\xF3rica e experimental de nosso grupo de
+    estudos, envolvido com quest\xF5es relativas \xE0 paisagem, arquitetura, urbanismo,
+    design, filosofia, antropologia, educa\xE7\xE3o, proje\xE7\xE3o e diversifica\xE7\xE3o
+    de futuros tecnol\xF3gicos.\r\n\r\nO LabGEIST \xE9 o tent\xE1culo experimental
+    e po\xE9tico do Grupo de Estudo dos Imagin\xE1rios da Tecnologia - GEIST. Nele,
+    colocamos a m\xE3o na massa, ensaiamos novas formas de compreens\xE3o e uso das
+    tecnologias do presente e especulamos sobre as tecnologias do futuro, reposicionando
+    as narrativas e os significados relativos aos objetos t\xE9cnicos.\r\n\r\nO GEIST
+    \xE9 um componente do grupo de pesquisa do CNPq Representa\xE7\xF5es: Imagin\xE1rio
+    e Tecnologia - RITe. \xC9 um grupo transdisciplinar que tem por objetivo discutir
+    textos sobre filosofia, hist\xF3ria e antropologia das t\xE9cnicas e elaborar
+    metodologias para a investiga\xE7\xE3o dos imagin\xE1rios tecnol\xF3gicos.\r\n\r\nMais
+    informa\xE7\xF5es: https://plataformaimago.wordpress.com/"
 --- !u!222 &737729570
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2438,6 +2429,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1067815653}
+        m_TargetAssemblyTypeName: UIDragger, script
+        m_MethodName: "ApertouBot\xE3o"
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 847506300}
+        m_TargetAssemblyTypeName: UIDragger, script
+        m_MethodName: "ApertouBot\xE3o"
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1039208822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2606,8 +2621,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.1984, y: -15}
-  m_SizeDelta: {x: 858.4118, y: 1737.604}
+  m_AnchoredPosition: {x: 5.1984, y: -129.96106}
+  m_SizeDelta: {x: 858.4118, y: 1967.5259}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1048327981
 MonoBehaviour:
@@ -2642,12 +2657,15 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: A O LabGeist Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-    do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-    dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-    sunt in culpa qui officia deserunt mollit anim id est laborum."
+  m_Text: "O Grupo de Pesquisa CNPq Representa\xE7\xF5es: Imagin\xE1rio e Tecnologia
+    - RITe re\xFAne pesquisadores de v\xE1rias \xE1reas de conhecimento - da filosofia
+    \xE0 ci\xEAncia da informa\xE7\xE3o, da geografia \xE0 arqueologia - dedicados
+    \xE0 investiga\xE7\xE3o cient\xEDfica de temas pertinentes ao campo da arquitetura
+    e do urbanismo que interagem com representa\xE7\xF5es e com processos de produ\xE7\xE3o
+    de objetos, edif\xEDcios e espa\xE7os urbanos. Vinculados existem 3 grupos de
+    estudos: O Grupo de Estudos do Imagin\xE1rio das Tecnologias - GEIST; o Cen\xE1rios
+    Urbanos Futuros - CUF e o Devaneios Experimentais e Po\xE9ticas Imaginativas
+    - DEPi."
 --- !u!222 &1048327982
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3349,7 +3367,6 @@ GameObject:
   - component: {fileID: 1635178283}
   - component: {fileID: 1635178286}
   - component: {fileID: 1635178285}
-  - component: {fileID: 1635178284}
   m_Layer: 5
   m_Name: SetaEsquerda
   m_TagString: Untagged
@@ -3376,50 +3393,6 @@ RectTransform:
   m_AnchoredPosition: {x: -505, y: 0}
   m_SizeDelta: {x: 15, y: 40}
   m_Pivot: {x: 0.5, y: 0.50000125}
---- !u!114 &1635178284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1635178282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1635178285}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1635178285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3427,7 +3400,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1635178282}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -3776,6 +3749,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1758023886}
+  - {fileID: 597845628}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3796,8 +3770,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9793bd5e767aca64e91e6eddbf6f0322, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  screenTimeOffScreen: 1
-  screenTimeOnScreen: 7
+  screenTimeOffScreen: 1.5
+  screenTimeOnScreen: 3
   startTime: 1.5
   transitions: 0.5
 --- !u!328 &1746254776
@@ -3870,7 +3844,6 @@ RectTransform:
   - {fileID: 1922833745}
   - {fileID: 1039208819}
   - {fileID: 2075183690}
-  - {fileID: 597845628}
   - {fileID: 264585461}
   m_Father: {fileID: 1746254774}
   m_RootOrder: 0
