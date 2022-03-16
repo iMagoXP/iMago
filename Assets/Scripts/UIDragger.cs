@@ -22,7 +22,7 @@ public class UIDragger : MonoBehaviour
     public string objectName;
     private Scene scene;
     private GameObject panel;
-    private bool apertouX = false;
+    private bool desativaSobre = false;
 
     // Start is called before the first frame update
     void Start()
@@ -89,14 +89,15 @@ public class UIDragger : MonoBehaviour
                 break;
         }
 
-        if(apertouX == true)
+        if(desativaSobre == true)
         {
             fadeOutTimer += Time.deltaTime;
             disableSobre();
+
             if(fadeOutTimer > 1.0f)
             {
                 enableHome();
-                apertouX = false;
+                desativaSobre = false;
             }
         }
     }
@@ -135,11 +136,11 @@ public class UIDragger : MonoBehaviour
 
     private void disableSobre()
     {
-        childrenImage[5].CrossFadeAlpha(0, 0.5f, false);
-        childrenImage[6].CrossFadeAlpha(0, 0.5f, false);
-        childrenImage[7].CrossFadeAlpha(0, 0.5f, false);
-        childrenText[5].CrossFadeAlpha(0, 0.5f, false);
-        childrenText[6].CrossFadeAlpha(0, 0.5f, false);
+        childrenImage[5].CrossFadeAlpha(0, 0.3f, false);
+        childrenImage[6].CrossFadeAlpha(0, 0.3f, false);
+        childrenImage[7].CrossFadeAlpha(0, 0.3f, false);
+        childrenText[5].CrossFadeAlpha(0, 0.3f, false);
+        childrenText[6].CrossFadeAlpha(0, 0.3f, false);
     }
 
     private void enableHome()
@@ -184,8 +185,7 @@ public class UIDragger : MonoBehaviour
                 if (transform.localPosition.y > maxHeight) correctPositionY(maxHeight-1);
                 else if (transform.localPosition.y < disableHeight-1)
                 {
-                    disableSobre();
-                    enableHome();
+                    desativaSobre = true;
                 }
             }
         }
@@ -297,7 +297,7 @@ public class UIDragger : MonoBehaviour
 
     public void apertaX()
     {
-        apertouX = true;
+        desativaSobre = true;
     }
 
     private void resetPosition()

@@ -4,7 +4,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-public class TestingImageDestroyer : ImageDestroyer
+/*public class TestingImageDestroyer : ImageDestroyer
 {
     public bool destroyed = false;
     public float yPos = 10.0f;
@@ -14,7 +14,7 @@ public class TestingImageDestroyer : ImageDestroyer
         destroyed = true;
     }
 
-    override public float GetPositionY()
+override public float GetPositionY()
     {
         return yPos;
     }
@@ -49,3 +49,4 @@ public class ImageDestroyerTest
         return gameObject.AddComponent<TestingImageDestroyer>();
     }
 }
+*/

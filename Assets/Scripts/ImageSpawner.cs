@@ -14,6 +14,7 @@ public class ImageSpawner : MonoBehaviour
     [SerializeField]
     protected float rowHeightDropOffset = 0.016f;
 
+    public bool stopSpawning;
     protected float spawnTimer;
 
     [SerializeField]
@@ -44,6 +45,8 @@ public class ImageSpawner : MonoBehaviour
     {
         textures = LoadTextures();
         SetTimers();
+        stopSpawning = false;
+
         images_scales = new float[5];
         images_scales[0] = 2.5f;
         images_scales[1] = 5.0f;
@@ -80,7 +83,7 @@ public class ImageSpawner : MonoBehaviour
 
         UpdateImageLevel();
 
-        if (spawnTimer >= GetSpawnCooldown())
+        if (spawnTimer >= GetSpawnCooldown() && stopSpawning == false)
         {
             SpawnImage();
             spawnTimer -= GetSpawnCooldown();
@@ -189,5 +192,11 @@ public class ImageSpawner : MonoBehaviour
         mats.SetTexture("_MainTex", tex);
         mats = child.transform.GetChild(1).GetComponent<Renderer>().material;
         mats.SetTexture("_MainTex", tex);
+    }
+    public Texture2D GetTexture()
+    {
+        Texture2D tex = (Texture2D)textures[Random.Range(0, textures.Length)];
+
+        return tex;
     }
 }

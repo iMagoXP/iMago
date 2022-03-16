@@ -69,7 +69,7 @@ public class UIButtonController : MonoBehaviour
             childrenText[3].CrossFadeAlpha(0, 0.2f, false);
             childrenText[4].CrossFadeAlpha(0, 0.2f, false);
 
-            if(dt > 0.3f)
+            if(dt > 1.5f)
             {
                 childrenImage[5].CrossFadeAlpha(1, 1.0f, false);
                 childrenImage[6].CrossFadeAlpha(1, 1.0f, false);
