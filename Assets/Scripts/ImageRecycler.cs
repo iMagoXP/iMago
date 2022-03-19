@@ -46,6 +46,7 @@ public class ImageRecycler : MonoBehaviour
         mats.SetTexture("_MainTex", tex);
         mats = gameObject.transform.GetChild(1).GetComponent<Renderer>().material;
         mats.SetTexture("_MainTex", tex);
+
         transform.position = initialPosition;
     }
 }

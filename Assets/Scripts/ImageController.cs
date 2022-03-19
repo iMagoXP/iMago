@@ -36,7 +36,6 @@ public class ImageController : MonoBehaviour
             {
                 Material mats = gameObject.GetComponent<Renderer>().material;
                 mats.SetColor("_Color", new Color(1.0f, 0.0f, 0.0f, 1.0f));
-                animatorLike[0].enabled = true;
                 animatorLike[1].enabled = true;
                 animatorLike[2].enabled = true;
                 audioSource[1].Play();
@@ -57,7 +56,25 @@ public class ImageController : MonoBehaviour
             }
             if (soundTimer > 2)
             {
-                audioSource[0].PlayOneShot((AudioClip)audioClips[Random.Range(0, audioClips.Length)]);
+                int randomAudio = Random.Range(0, audioClips.Length);
+                AudioClip fadeAudio = (AudioClip)audioClips[randomAudio];
+                switch (randomAudio) 
+                {
+                    case 0:
+                        Debug.Log("Case1");
+                        audioSource[0].PlayOneShot(fadeAudio, 0.15f);
+                        break;
+                    case 1:
+                        Debug.Log("Case2");
+                        audioSource[0].PlayOneShot(fadeAudio, 0.4f);
+                        break;
+                    case 2:
+                        Debug.Log("Case3");
+                        audioSource[0].PlayOneShot(fadeAudio, 0.45f);
+                        break;
+
+                }
+
                 playSound = false;
             }
         }

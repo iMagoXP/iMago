@@ -298,6 +298,7 @@ public class UIDragger : MonoBehaviour
     public void apertaX()
     {
         desativaSobre = true;
+        gameObject.GetComponent<AudioSource>().Play();
     }
 
     private void resetPosition()

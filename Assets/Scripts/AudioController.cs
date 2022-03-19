@@ -18,7 +18,39 @@ public class AudioController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(gameObject.name == "Mural")
+        if(gameObject.name == "MuralExplanation")
+        {
+            if (transform.localPosition.x < -600.0f && transform.localPosition.x > -800.0f && played == false)
+            {
+                audioSource.Play();
+                played = true;
+            }
+            else if (transform.localPosition.x < -1600.0f && transform.localPosition.x > -1800.0f && played == false)
+            {
+                audioSource.Play();
+                played = true;
+            }
+            else if (transform.localPosition.x < -2700.0f && transform.localPosition.x > -2900.0f && played == false)
+            {
+                audioSource.Play();
+                played = true;
+            }
+            else if (transform.localPosition.x < -3800.0f && transform.localPosition.x > -4000.0f && played == false)
+            {
+                played = true;
+                audioSource.Play();
+            }
+            else if (transform.localPosition.x < -5000.0f && transform.localPosition.x > -5200.0f && played == false)
+            {
+                audioSource.Play();
+                played = true;
+            }
+            else if (transform.localPosition.x < -0.0f && transform.localPosition.x > -1125.0f) played = false;
+            else if (transform.localPosition.x < -1800.0f && transform.localPosition.x > -2700.0f) played = false;
+            else if (transform.localPosition.x < -2900.0f && transform.localPosition.x > -3800.0f) played = false;
+            else if (transform.localPosition.x < -4000.0f && transform.localPosition.x > -5000.0f) played = false;
+        }
+        else if(gameObject.name == "MuralSobre")
         {
             if (transform.localPosition.x < -600.0f && transform.localPosition.x > -800.0f && played == false)
             {
