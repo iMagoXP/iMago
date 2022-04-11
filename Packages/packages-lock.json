@@ -11,10 +11,12 @@
       "hash": "6ea2c3c041dfe61a3b254fc482fd56ad852a725c"
     },
     "com.unity.collab-proxy": {
-      "version": "1.9.0",
+      "version": "1.15.13",
       "depth": 0,
       "source": "registry",
-      "dependencies": {},
+      "dependencies": {
+        "com.unity.services.core": "1.0.1"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.ext.nunit": {
@@ -25,16 +27,16 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
-      "version": "2.0.7",
+      "version": "3.0.12",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.test-framework": "1.1.1"
+        "com.unity.ext.nunit": "1.0.6"
       },
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.12",
+      "version": "2.0.14",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -43,14 +45,14 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.vscode": {
-      "version": "1.2.4",
+      "version": "1.2.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.postprocessing": {
-      "version": "3.1.1",
+      "version": "3.2.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -58,15 +60,26 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.services.core": {
+      "version": "1.0.1",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.unitywebrequest": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.subsystemregistration": {
-      "version": "1.0.6",
+      "version": "1.1.0",
       "depth": 2,
       "source": "registry",
-      "dependencies": {},
+      "dependencies": {
+        "com.unity.modules.subsystems": "1.0.0"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
-      "version": "1.1.30",
+      "version": "1.1.31",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -86,7 +99,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
-      "version": "1.4.8",
+      "version": "1.6.4",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -107,7 +120,7 @@
       }
     },
     "com.unity.xr.legacyinputhelpers": {
-      "version": "2.1.8",
+      "version": "2.1.9",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -117,7 +130,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.management": {
-      "version": "4.0.1",
+      "version": "4.2.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {
