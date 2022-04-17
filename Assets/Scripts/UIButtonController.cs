@@ -26,7 +26,7 @@ public class UIButtonController : MonoBehaviour
 
         panel = GameObject.Find("Panel");
 
-        if (scene.name == "Interface")
+        if (scene.name == "Menu")
         {
             buttons = panel.gameObject.GetComponentsInChildren<Button>(true);
             childrenImage = panel.gameObject.GetComponentsInChildren<Image>(true);
@@ -60,36 +60,36 @@ public class UIButtonController : MonoBehaviour
 
             buttons[1].enabled = false;
             buttons[0].enabled = false;
+
+            childrenImage[0].CrossFadeAlpha(0, 0.2f, false);
             childrenImage[1].CrossFadeAlpha(0, 0.2f, false);
             childrenImage[2].CrossFadeAlpha(0, 0.2f, false);
             childrenImage[3].CrossFadeAlpha(0, 0.2f, false);
-            childrenImage[4].CrossFadeAlpha(0, 0.2f, false);
+            childrenText[0].CrossFadeAlpha(0, 0.2f, false);
             childrenText[1].CrossFadeAlpha(0, 0.2f, false);
             childrenText[2].CrossFadeAlpha(0, 0.2f, false);
             childrenText[3].CrossFadeAlpha(0, 0.2f, false);
-            childrenText[4].CrossFadeAlpha(0, 0.2f, false);
 
             if(dt > 1.5f)
             {
+                childrenImage[4].CrossFadeAlpha(1, 1.0f, false);
                 childrenImage[5].CrossFadeAlpha(1, 1.0f, false);
                 childrenImage[6].CrossFadeAlpha(1, 1.0f, false);
-                childrenImage[7].CrossFadeAlpha(1, 1.0f, false);
+                childrenText[4].CrossFadeAlpha(1, 1.0f, false);
                 childrenText[5].CrossFadeAlpha(1, 1.0f, false);
-                childrenText[6].CrossFadeAlpha(1, 1.0f, false);
+
                 dt = 0.0f;
                 state = 0;
             }
         }
     }
 
-    // Start is called before the first frame update
     public void Volta()
     {
         audioSource.Play();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        SceneManager.LoadScene("Menu");
     }
 
-    // Update is called once per frame
     public void IniciaCI()
     {
         audioSource.Play();
@@ -104,7 +104,9 @@ public class UIButtonController : MonoBehaviour
     public void VamosPassear()
     {
         audioSource.Play();
-        GameObject.Find("Fade").GetComponent<Image>().CrossFadeAlpha(1, 1.5f, false);
+        Image fade = GameObject.Find("Fade").GetComponent<Image>();
+        fade.CrossFadeAlpha(1, 1.5f, false);
+        fade.color = new Color(255,255,255,255);
         state = 1;
     }
 

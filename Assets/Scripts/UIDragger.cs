@@ -30,7 +30,7 @@ public class UIDragger : MonoBehaviour
         scene = SceneManager.GetActiveScene();
         objectName = gameObject.name;
 
-        if (scene.name == "Interface")
+        if (scene.name == "Menu")
         {
             if(objectName != "MuralSobre")
             {
@@ -42,7 +42,7 @@ public class UIDragger : MonoBehaviour
             }
             else if(objectName == "MuralSobre")
             {
-                parentImage = gameObject.transform.parent.gameObject.GetComponentsInChildren<Image>(true);
+                parentImage = GameObject.Find("MuralContainer").gameObject.GetComponentsInChildren<Image>(true);
             }
 
             apertou = false;
@@ -109,15 +109,14 @@ public class UIDragger : MonoBehaviour
 
         switch (touch.phase)
         {
-            //When a touch has first been detected, change the message and record the starting position
+            
             case TouchPhase.Began:
-                // Record initial touch position.
+                
                 startPos = touch.position;
                 break;
 
-            //Determine if the touch is a moving touch
             case TouchPhase.Moved:
-                // Determine direction by comparing the current touch position with the initial one
+
                 direction = touch.position - startPos;
                 if (objectName == "MuralSobre")
                 {
@@ -126,21 +125,16 @@ public class UIDragger : MonoBehaviour
                 else if(objectName == "MuralExplanation") transform.localPosition += new Vector3(direction.normalized.x * magnitude, 0.0f, 0.0f);
                 else transform.localPosition += new Vector3(0.0f, direction.normalized.y * magnitude, 0.0f);
                 break;
-
-            case TouchPhase.Ended:
-                // Report that the touch has ended when it ends
-                Debug.Log("Ended");
-                break;
         }
     }
 
     private void disableSobre()
     {
+        childrenImage[4].CrossFadeAlpha(0, 0.3f, false);
         childrenImage[5].CrossFadeAlpha(0, 0.3f, false);
         childrenImage[6].CrossFadeAlpha(0, 0.3f, false);
-        childrenImage[7].CrossFadeAlpha(0, 0.3f, false);
+        childrenText[4].CrossFadeAlpha(0, 0.3f, false);
         childrenText[5].CrossFadeAlpha(0, 0.3f, false);
-        childrenText[6].CrossFadeAlpha(0, 0.3f, false);
     }
 
     private void enableHome()
@@ -148,14 +142,14 @@ public class UIDragger : MonoBehaviour
         buttons[1].enabled = true;
         buttons[0].enabled = true;
 
+        childrenText[0].CrossFadeAlpha(1, 1.5f, false);
         childrenText[1].CrossFadeAlpha(1, 1.5f, false);
-        childrenText[2].CrossFadeAlpha(1, 1.5f, false);
+        childrenImage[0].CrossFadeAlpha(1, 1.5f, false);
         childrenImage[1].CrossFadeAlpha(1, 1.5f, false);
         childrenImage[2].CrossFadeAlpha(1, 1.5f, false);
         childrenImage[3].CrossFadeAlpha(1, 1.5f, false);
-        childrenImage[4].CrossFadeAlpha(1, 1.5f, false);
+        childrenText[2].CrossFadeAlpha(1, 1.5f, false);
         childrenText[3].CrossFadeAlpha(1, 1.5f, false);
-        childrenText[4].CrossFadeAlpha(1, 1.5f, false);
 
         if (objectName != "X") transform.localPosition = new Vector3(transform.localPosition.x, 0.0f, transform.localPosition.z);
         else if (objectName == "X") gameObject.GetComponent<Image>().CrossFadeAlpha(0, 0.5f, false);
@@ -183,7 +177,7 @@ public class UIDragger : MonoBehaviour
             else
             {
                 if (transform.localPosition.y > maxHeight) correctPositionY(maxHeight-1);
-                else if (transform.localPosition.y < disableHeight-1)
+                else if (transform.localPosition.y < disableHeight-1.0f)
                 {
                     desativaSobre = true;
                 }

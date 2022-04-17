@@ -97,7 +97,7 @@ public class VRButtonController : MonoBehaviour
         else if (gameObject.name == "Voltar" && activated == true)
         {
             audioSource.Play();
-            SceneManager.LoadScene("Interface");
+            SceneManager.LoadScene("Menu");
         }
     }
 

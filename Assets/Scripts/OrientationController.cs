@@ -25,6 +25,7 @@ public class OrientationController : MonoBehaviour
             Screen.autorotateToLandscapeLeft = false;
             Screen.autorotateToLandscapeRight = false;
             Screen.orientation = ScreenOrientation.Portrait;
+            Screen.sleepTimeout = SleepTimeout.SystemSetting;
         }
         else if (scene.name == "Instagram")
         {
@@ -33,6 +34,7 @@ public class OrientationController : MonoBehaviour
             Screen.autorotateToLandscapeLeft = true;
             Screen.autorotateToLandscapeRight = true;
             Screen.orientation = ScreenOrientation.LandscapeLeft;
+            Screen.sleepTimeout = SleepTimeout.NeverSleep;
         }
     }
 
