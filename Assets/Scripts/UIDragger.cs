@@ -118,14 +118,25 @@ public class UIDragger : MonoBehaviour
             case TouchPhase.Moved:
 
                 direction = touch.position - startPos;
-                if (objectName == "MuralSobre")
-                {
-                    if (direction.x > 88.0f || direction.x < -88.0f) transform.localPosition += new Vector3(direction.normalized.x * magnitude, 0.0f, 0.0f);
-                }
-                else if(objectName == "MuralExplanation") transform.localPosition += new Vector3(direction.normalized.x * magnitude, 0.0f, 0.0f);
+                if ((objectName == "MuralSobre" || objectName == "MuralExplanation")  && (direction.x > 88.0f || direction.x < -88.0f)) transform.localPosition += new Vector3(direction.normalized.x * magnitude, 0.0f, 0.0f);
                 else transform.localPosition += new Vector3(0.0f, direction.normalized.y * magnitude, 0.0f);
                 break;
         }
+    }
+    
+    public void enableSobre()
+    {
+        childrenImage[4].color = new Color(255, 255, 255, 1);
+        childrenImage[5].color = new Color(255, 255, 255, 1);
+        childrenImage[6].color = new Color(255, 255, 255, 1);
+        childrenText[4].color = new Color(255, 255, 255, 1);
+        childrenText[5].color = new Color(255, 255, 255, 1);
+
+        childrenImage[4].CrossFadeAlpha(1, 0.3f, false);
+        childrenImage[5].CrossFadeAlpha(1, 0.3f, false);
+        childrenImage[6].CrossFadeAlpha(1, 0.3f, false);
+        childrenText[4].CrossFadeAlpha(1, 0.3f, false);
+        childrenText[5].CrossFadeAlpha(1, 0.3f, false);
     }
 
     private void disableSobre()
@@ -284,7 +295,7 @@ public class UIDragger : MonoBehaviour
         transform.localPosition = new Vector3(transform.localPosition.x, position, transform.localPosition.z);
     }
 
-    public void ApertouBotão()
+    public void ApertouBotao()
     {
         apertou = true;
     }

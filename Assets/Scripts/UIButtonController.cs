@@ -106,7 +106,7 @@ public class UIButtonController : MonoBehaviour
         audioSource.Play();
         Image fade = GameObject.Find("Fade").GetComponent<Image>();
         fade.CrossFadeAlpha(1, 1.5f, false);
-        fade.color = new Color(255,255,255,255);
+        fade.color = new Color(0,0,0,1);
         state = 1;
     }
 
