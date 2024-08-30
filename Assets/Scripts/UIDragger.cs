@@ -22,7 +22,9 @@ public class UIDragger : MonoBehaviour
     public string objectName;
     private Scene scene;
     private GameObject panel;
-    private bool desativaSobre = false;
+    public bool desativaSobre = false;
+    public Animator panelSobre;
+    public Animator panelInicial;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +36,7 @@ public class UIDragger : MonoBehaviour
         {
             if(objectName != "MuralSobre")
             {
-                panel = GameObject.Find("Panel");
+                panel = GameObject.Find("Tela inicial");
                 buttons = panel.gameObject.GetComponentsInChildren<Button>(true);
                 childrenImage = panel.gameObject.GetComponentsInChildren<Image>(true);
                 childrenText = panel.gameObject.GetComponentsInChildren<Text>(true);
@@ -91,14 +93,8 @@ public class UIDragger : MonoBehaviour
 
         if(desativaSobre == true)
         {
-            fadeOutTimer += Time.deltaTime;
             disableSobre();
-
-            if(fadeOutTimer > 1.0f)
-            {
-                enableHome();
-                desativaSobre = false;
-            }
+            desativaSobre = false;
         }
     }
 
@@ -123,51 +119,17 @@ public class UIDragger : MonoBehaviour
                 break;
         }
     }
-    
-    public void enableSobre()
-    {
-        childrenImage[4].color = new Color(255, 255, 255, 1);
-        childrenImage[5].color = new Color(255, 255, 255, 1);
-        childrenImage[6].color = new Color(255, 255, 255, 1);
-        childrenText[4].color = new Color(255, 255, 255, 1);
-        childrenText[5].color = new Color(255, 255, 255, 1);
 
-        childrenImage[4].CrossFadeAlpha(1, 0.3f, false);
-        childrenImage[5].CrossFadeAlpha(1, 0.3f, false);
-        childrenImage[6].CrossFadeAlpha(1, 0.3f, false);
-        childrenText[4].CrossFadeAlpha(1, 0.3f, false);
-        childrenText[5].CrossFadeAlpha(1, 0.3f, false);
+    public void disableSobre()
+    {
+        StartCoroutine(VoltaInicio());
     }
 
-    private void disableSobre()
+    public IEnumerator VoltaInicio()
     {
-        childrenImage[4].CrossFadeAlpha(0, 0.3f, false);
-        childrenImage[5].CrossFadeAlpha(0, 0.3f, false);
-        childrenImage[6].CrossFadeAlpha(0, 0.3f, false);
-        childrenText[4].CrossFadeAlpha(0, 0.3f, false);
-        childrenText[5].CrossFadeAlpha(0, 0.3f, false);
-    }
-
-    private void enableHome()
-    {
-        buttons[1].enabled = true;
-        buttons[0].enabled = true;
-
-        childrenText[0].CrossFadeAlpha(1, 1.5f, false);
-        childrenText[1].CrossFadeAlpha(1, 1.5f, false);
-        childrenImage[0].CrossFadeAlpha(1, 1.5f, false);
-        childrenImage[1].CrossFadeAlpha(1, 1.5f, false);
-        childrenImage[2].CrossFadeAlpha(1, 1.5f, false);
-        childrenImage[3].CrossFadeAlpha(1, 1.5f, false);
-        childrenText[2].CrossFadeAlpha(1, 1.5f, false);
-        childrenText[3].CrossFadeAlpha(1, 1.5f, false);
-
-        if (objectName != "X") transform.localPosition = new Vector3(transform.localPosition.x, 0.0f, transform.localPosition.z);
-        else if (objectName == "X") gameObject.GetComponent<Image>().CrossFadeAlpha(0, 0.5f, false);
-        GameObject.Find("MuralSobre").transform.localPosition = new Vector3(0.0f, 0.0f, transform.localPosition.z);
-
-        apertou = false;
-        scriptMural.apertou = false;
+        panelSobre.Play("FadeOut");
+        yield return new WaitForSeconds(2);
+        panelInicial.Play("FadeIn");
     }
 
     public void verticalPanelsDrag(float panelNumber, float disableHeight, float maxHeight)
@@ -302,7 +264,7 @@ public class UIDragger : MonoBehaviour
 
     public void apertaX()
     {
-        desativaSobre = true;
+        disableSobre();
         gameObject.GetComponent<AudioSource>().Play();
     }
 

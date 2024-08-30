@@ -12,76 +12,16 @@ public class UIButtonController : MonoBehaviour
     private Image[] childrenImage;
     private Text[] childrenText;
     private AudioSource audioSource;
-    private int state;
     private float dt;
-    private bool playSound;
+    public Animator panelInicial;
+    public Animator panelSobre;
 
 
     void Start()
     {
-        state = 0;
-
         Scene scene = SceneManager.GetActiveScene();
         if (scene.name == "Instagram") Time.timeScale = 0;
-
-        panel = GameObject.Find("Panel");
-
-        if (scene.name == "Menu")
-        {
-            buttons = panel.gameObject.GetComponentsInChildren<Button>(true);
-            childrenImage = panel.gameObject.GetComponentsInChildren<Image>(true);
-            childrenText = panel.gameObject.GetComponentsInChildren<Text>(true);
-        }
-
         audioSource = gameObject.GetComponent<AudioSource>();
-
-    }
-
-    void Update()
-    {
-        if (state == 1)
-        {
-
-            dt += Time.deltaTime;
-
-            if (dt > 2) SceneManager.LoadScene("Explanation");
-
-        }
-        else if(state == 2)
-        {
-
-            dt += Time.deltaTime;
-
-            if (playSound == true) 
-            { 
-                audioSource.Play();
-                playSound = false;
-            }
-
-            buttons[1].enabled = false;
-            buttons[0].enabled = false;
-
-            childrenImage[0].CrossFadeAlpha(0, 0.2f, false);
-            childrenImage[1].CrossFadeAlpha(0, 0.2f, false);
-            childrenImage[2].CrossFadeAlpha(0, 0.2f, false);
-            childrenImage[3].CrossFadeAlpha(0, 0.2f, false);
-            childrenText[0].CrossFadeAlpha(0, 0.2f, false);
-            childrenText[1].CrossFadeAlpha(0, 0.2f, false);
-            childrenText[2].CrossFadeAlpha(0, 0.2f, false);
-            childrenText[3].CrossFadeAlpha(0, 0.2f, false);
-
-            if(dt > 1.5f)
-            {
-                childrenImage[4].CrossFadeAlpha(1, 1.0f, false);
-                childrenImage[5].CrossFadeAlpha(1, 1.0f, false);
-                childrenImage[6].CrossFadeAlpha(1, 1.0f, false);
-                childrenText[4].CrossFadeAlpha(1, 1.0f, false);
-                childrenText[5].CrossFadeAlpha(1, 1.0f, false);
-
-                dt = 0.0f;
-                state = 0;
-            }
-        }
     }
 
     public void Volta()
@@ -101,19 +41,29 @@ public class UIButtonController : MonoBehaviour
         childrenText[2].gameObject.SetActive(false);
     }
     
-    public void VamosPassear()
+    public void Iniciar()
+    {
+        StartCoroutine(VamosPassear());
+    }
+    public IEnumerator VamosPassear()
     {
         audioSource.Play();
-        Image fade = GameObject.Find("Fade").GetComponent<Image>();
-        fade.CrossFadeAlpha(1, 1.5f, false);
-        fade.color = new Color(0,0,0,1);
-        state = 1;
+        panelInicial.Play("FadeOut");
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene("Explanation");
     }
-
+    
     public void Sobre()
     {
-        state = 2;
-        playSound = true;
+        StartCoroutine(MostraSobre());
+    }
+
+    public IEnumerator MostraSobre()
+    {
+        audioSource.Play();
+        panelInicial.Play("FadeOut");
+        yield return new WaitForSeconds(2);
+        panelSobre.Play("FadeIn");
     }
 
     public void BaixarManual()
