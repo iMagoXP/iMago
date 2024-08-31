@@ -65,7 +65,18 @@ public class UIButtonController : MonoBehaviour
         yield return new WaitForSeconds(2);
         panelSobre.Play("FadeIn");
     }
+    public void SaiSobre()
+    {
+        StartCoroutine(FechaSobre());
+    }
 
+    public IEnumerator FechaSobre()
+    {
+        audioSource.Play();
+        panelSobre.Play("FadeOut");
+        yield return new WaitForSeconds(2);
+        panelInicial.Play("FadeIn");
+    }
     public void BaixarManual()
     {
         audioSource.Play();

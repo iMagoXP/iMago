@@ -10,7 +10,6 @@ public class AudioController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(gameObject.name == "AudioSource")   DontDestroyOnLoad(this.gameObject);
         audioSource = gameObject.GetComponent<AudioSource>();
         played = false;
     }

@@ -10,9 +10,13 @@ public class SplashController : MonoBehaviour
     public List<GameObject> logos;
     private Coroutine splashCoroutine = null;
     private Coroutine waitCoroutine = null;
+    public GameObject SeenSplashes;
     
     void Start()
     {
+        GameObject seenSplashes = GameObject.Find("SeenSplashes");
+        if(seenSplashes != null)  j = logos.Count-1;
+        else Instantiate(SeenSplashes, new Vector3 (0,0,0), Quaternion.identity).name = SeenSplashes.name;
         splashCoroutine = StartCoroutine(SplashRoutine());
     }
 

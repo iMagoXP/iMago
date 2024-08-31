@@ -42,7 +42,7 @@ public class OrientationController : MonoBehaviour
     {
         dt += Time.deltaTime;
         if (scene.name == "Instagram" && dt > 2.0f && vrOn == false) StartVR();
-        if (scene.name == "Instagram" && Api.IsCloseButtonPressed)
+        if (XRGeneralSettings.Instance.Manager.isInitializationComplete && Api.IsCloseButtonPressed)
         {
             SceneManager.LoadScene("Menu");
         }
