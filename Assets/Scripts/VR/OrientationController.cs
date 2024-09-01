@@ -43,9 +43,7 @@ public class OrientationController : MonoBehaviour
         dt += Time.deltaTime;
         if (scene.name == "Instagram" && dt > 2.0f && vrOn == false) StartVR();
         if (XRGeneralSettings.Instance.Manager.isInitializationComplete && Api.IsCloseButtonPressed)
-        {
-            SceneManager.LoadScene("Menu");
-        }
+            ExitVR();
     }
 
     IEnumerator EnterVr()
@@ -69,5 +67,20 @@ public class OrientationController : MonoBehaviour
         {
             Api.ReloadDeviceParams();
         }
+    }
+    private void ExitVR()
+    {
+        StopXR();
+    }
+    private void StopXR()
+    {
+        Debug.Log("Stopping XR...");
+        XRGeneralSettings.Instance.Manager.StopSubsystems();
+        Debug.Log("XR stopped.");
+
+        Debug.Log("Deinitializing XR...");
+        XRGeneralSettings.Instance.Manager.DeinitializeLoader();
+        Debug.Log("XR deinitialized.");
+        SceneManager.LoadScene("Menu");
     }
 }
