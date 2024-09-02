@@ -5,21 +5,20 @@ using UnityEngine.UI;
 
 public class FadeScreen : MonoBehaviour
 {
-    private Image fade;
+    public Animator animator;
 
     private void Start()
     {
-        fade = gameObject.GetComponent<Image>();
-        FadeOut();
+        animator.Play("FadeImageOut");
     }
 
     public void FadeIn()
     {
-        fade.CrossFadeAlpha(1, 2.0f, false);
+        animator.Play("FadeImageIn");
     }
 
     private void FadeOut()
     {
-        fade.CrossFadeAlpha(0, 2.0f, false);
+        animator.Play("FadeImageOut");
     }
 }

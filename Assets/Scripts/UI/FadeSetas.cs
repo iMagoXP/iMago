@@ -7,7 +7,7 @@ public class FadeSetas : MonoBehaviour
 {
     public HorizontalSlider scriptHorizontalSlider;
     public Animator animatorEsquerdo;
-    public Animator animatorGeral;
+    public Animator animatorBlack;
     private bool selfFaded = true;
     private bool allFaded = false;
 
@@ -18,17 +18,17 @@ public class FadeSetas : MonoBehaviour
     
     void Update()
     {
-        if(scriptHorizontalSlider.sliderObjects[0].name == "Atenção" && selfFaded == false)
+        if(scriptHorizontalSlider.sliderObjects[2].name == "Bem vindes !" && selfFaded == false)
         {
             selfFaded = true;
             animatorEsquerdo.Play("FadeImageOut");
         }
-        else if(scriptHorizontalSlider.sliderObjects[0].name == "Tudo Pronto" && selfFaded == true)
+        else if(scriptHorizontalSlider.sliderObjects[2].name == "Prepare-se" && selfFaded == true)
         {
             selfFaded = false;
             animatorEsquerdo.Play("FadeImageIn");
         }
-        else if(scriptHorizontalSlider.sliderObjects[0].name == "Prepare-se" && allFaded == false)
+        else if(scriptHorizontalSlider.sliderObjects[2].name == "Entrar" && allFaded == false)
         {
             allFaded = true;
             StartCoroutine(transitionScene());
@@ -37,7 +37,7 @@ public class FadeSetas : MonoBehaviour
 
     public IEnumerator transitionScene()
     {
-            animatorGeral.Play("FadeOut");
+            animatorBlack.Play("FadeImageIn");
             yield return new WaitForSeconds(2);
             SceneManager.LoadScene("Instagram");
     }

@@ -44,10 +44,10 @@ public class HorizontalSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 			actualInterctionRatioX = touch.position.x / Screen.width;
 #endif
 			if((((originInteractionRatioX) - (actualInterctionRatioX)) < 0)
-			&& sliderObjects[0].name == "Atenção") break;
+			&& sliderObjects[0].name == "Tudo Pronto") break;
 			else if(((((originInteractionRatioX) - (actualInterctionRatioX)) > 0)
 			||(((originInteractionRatioX) - (actualInterctionRatioX)) < 0))
-			&& sliderObjects[0].name == "Prepare-se") break;
+			&& sliderObjects[0].name == "") break;
 			fingerPos = ((-1.0f) * ((originInteractionRatioX) - (actualInterctionRatioX))) / fullAnimationRange;
 			if (fingerPos > 1.0f) fingerPos = 1.0f;
 			else if (fingerPos < -1.0f) fingerPos = -1.0f;

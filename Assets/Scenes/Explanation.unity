@@ -314,7 +314,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scriptHorizontalSlider: {fileID: 647943121}
   animatorEsquerdo: {fileID: 72226933}
-  animatorGeral: {fileID: 211360400}
+  animatorBlack: {fileID: 111873690}
 --- !u!1 &80918966
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,6 +406,7 @@ GameObject:
   - component: {fileID: 111873688}
   - component: {fileID: 111873687}
   - component: {fileID: 111873689}
+  - component: {fileID: 111873690}
   m_Layer: 5
   m_Name: Fade
   m_TagString: Untagged
@@ -420,16 +421,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 111873685}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 647943117}
+  m_Father: {fileID: 211360397}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3121.5383, y: 0}
+  m_AnchoredPosition: {x: 3121.5383, y: 0.00015191273}
   m_SizeDelta: {x: 7368.08, y: 2436}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &111873687
@@ -482,6 +483,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a4d2f1152243c7479816d964821ed97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 111873690}
+--- !u!95 &111873690
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111873685}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6135993932fd41041ad60d1355f2b6cc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &133000200
 GameObject:
   m_ObjectHideFlags: 0
@@ -1020,6 +1043,7 @@ RectTransform:
   - {fileID: 72226929}
   - {fileID: 647943117}
   - {fileID: 1331797110}
+  - {fileID: 111873686}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1497,7 +1521,6 @@ RectTransform:
   - {fileID: 1573551716}
   - {fileID: 2056237321}
   - {fileID: 875665872}
-  - {fileID: 111873686}
   m_Father: {fileID: 211360397}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1627,13 +1650,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distance: 1200
   sliderObjects:
-  - {fileID: 1573551716}
   - {fileID: 2056237321}
+  - {fileID: 875665872}
   - {fileID: 194314292}
   - {fileID: 983959920}
   - {fileID: 1916545165}
-  - {fileID: 875665872}
-  fullAnimationRange: 0.25
+  - {fileID: 1573551716}
+  fullAnimationRange: 0.75
   Setas:
   - {fileID: 72226931}
 --- !u!1 &723363272

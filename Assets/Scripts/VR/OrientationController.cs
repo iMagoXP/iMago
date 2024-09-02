@@ -81,6 +81,7 @@ public class OrientationController : MonoBehaviour
         Debug.Log("Deinitializing XR...");
         XRGeneralSettings.Instance.Manager.DeinitializeLoader();
         Debug.Log("XR deinitialized.");
+        Screen.orientation = ScreenOrientation.Portrait;
         SceneManager.LoadScene("Menu");
     }
 }

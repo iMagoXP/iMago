@@ -3,25 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering;
 
 public class SplashController : MonoBehaviour
 {
     private int j = 0;
+    public bool inicia;
     public List<GameObject> logos;
     private Coroutine splashCoroutine = null;
     private Coroutine waitCoroutine = null;
     public GameObject SeenSplashes;
+    public Button skipSplashes;
     
     void Start()
     {
         GameObject seenSplashes = GameObject.Find("SeenSplashes");
         if(seenSplashes != null)  j = logos.Count-1;
         else Instantiate(SeenSplashes, new Vector3 (0,0,0), Quaternion.identity).name = SeenSplashes.name;
-        splashCoroutine = StartCoroutine(SplashRoutine());
+        inicia = false;
     }
 
+    void Update()
+    {
+        if(SplashScreen.isFinished && inicia == false)
+        {
+            inicia = true;
+            skipSplashes.interactable = true;
+            splashCoroutine = StartCoroutine(SplashRoutine());
+        }
+    }
     public IEnumerator SplashRoutine()
     {
+        if(j == 0)
+        {
+            waitCoroutine = StartCoroutine(EspereInterruptivel(2.0f));
+            yield return waitCoroutine;
+        }
         for(int i = j; i < logos.Count; i++)
         { 
             j = i;

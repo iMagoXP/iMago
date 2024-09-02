@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Google.XR.Cardboard;
+using UnityEngine.XR;
+using UnityEngine.XR.Management;
 
 public class VRButtonController : MonoBehaviour
 {
@@ -97,8 +100,24 @@ public class VRButtonController : MonoBehaviour
         else if (gameObject.name == "Voltar" && activated == true)
         {
             audioSource.Play();
-            SceneManager.LoadScene("Menu");
+            ExitVR();
         }
+    }
+    private void ExitVR()
+    {
+        StopXR();
+    }
+    private void StopXR()
+    {
+        Debug.Log("Stopping XR...");
+        XRGeneralSettings.Instance.Manager.StopSubsystems();
+        Debug.Log("XR stopped.");
+
+        Debug.Log("Deinitializing XR...");
+        XRGeneralSettings.Instance.Manager.DeinitializeLoader();
+        Debug.Log("XR deinitialized.");
+        Screen.orientation = ScreenOrientation.Portrait;
+        SceneManager.LoadScene("Menu");
     }
 
     public void OnPointerEnter()
